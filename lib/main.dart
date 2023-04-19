@@ -1,20 +1,32 @@
-import 'package:BikeCorssing/screens/splash.dart';
+import 'package:BikeCorssing/screens/introduction_screen.dart';
 import 'package:flutter/material.dart';
-
+import 'package:go_router/go_router.dart';
 void main() {
   runApp(const MyApp());
 }
+final GoRouter _router = GoRouter(
+  routes: [
+    GoRoute(
+      path: '/',
+      builder: (BuildContext context, GoRouterState state) {
+        return const IntroductionScreen();
+      },
+    ),
+  ],
+);
+
+
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-  // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'bookCrossing',
-      theme: ThemeData(
-      ),
-      home: SplashScreen(),
+    return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
+      routerConfig: _router,
     );
   }
 }
+
