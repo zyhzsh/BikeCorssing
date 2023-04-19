@@ -20,12 +20,26 @@ dev_dependencies:
     sdk: flutter
   flutter_lints: ^2.0.0
   flutter_launcher_icons: "^0.13.0"
+  flutter_native_splash: ^2.2.19
+
+
+flutter_native_splash:
+  color: "#F7F8F7"
+  #color: "#ffffff"
+  #background_image: assets/images/splash.png
+  image: assets/images/splash_image_icon.png
+  #Run Command to auto generate splash screen: "flutter pub run flutter_native_splash:create"
+  android_12:
+    color: "#F7F8F7"
+    image: assets/images/logo_icon.png
+
 
 flutter_icons:
   android: "launcher_icon"
   ios: true
   image_path: "assets/images/logo_icon.png"
-  min_sdk_android: 21 # android min sdk min:16, default 21
+  min_sdk_android: 21 # android min sdk min:16,default 21
+  #Run Command to auto generate logo: "flutter pub run flutter_launcher_icons"
 
 flutter:
 
