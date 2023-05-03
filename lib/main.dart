@@ -1,32 +1,49 @@
 import 'package:BikeCorssing/screens/introduction_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-void main() {
-  runApp(const MyApp());
-}
-final GoRouter _router = GoRouter(
-  routes: [
-    GoRoute(
-      path: '/',
-      builder: (BuildContext context, GoRouterState state) {
-        return const IntroductionScreen();
-      },
-    ),
-  ],
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+final theme = ThemeData(
+  useMaterial3: true,
+  colorScheme: ColorScheme.fromSeed(
+//    brightness: Brightness.dark,
+    seedColor: const Color.fromARGB(255, 50, 201, 169),
+  ),
+  textTheme: GoogleFonts.latoTextTheme(),
 );
 
+void main() {
+  runApp(
+    const ProviderScope(
+      child: App(),
+    ),
+  );
+}
 
+class App extends StatefulWidget {
+  const App({super.key});
 
+  @override
+  State<App> createState() => _AppState();
+}
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class _AppState extends State<App> {
+  bool isOnBoarding = true;
+
+  void _skipOnBoarding() {
+    setState(() {
+      isOnBoarding = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      routerConfig: _router,
+      theme: theme,
+      home: isOnBoarding?IntroductionScreen(
+        onSkipOnBoarding: _skipOnBoarding,
+      ):Text('ss'),
     );
   }
 }
-
