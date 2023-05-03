@@ -1,4 +1,4 @@
-name: BikeCorssing
+name: BikeCrossing
 description: A new Flutter project.
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -27,7 +27,7 @@ flutter_native_splash:
   color: "#F7F8F7"
   #color: "#ffffff"
   #background_image: assets/images/splash.png
-  image: assets/images/splash_image_icon.png
+  #image: assets/images/splash_image_icon.png
   #Run Command to auto generate splash screen: "flutter pub run flutter_native_splash:create"
   android_12:
     color: "#F7F8F7"
