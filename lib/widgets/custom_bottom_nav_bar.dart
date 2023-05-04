@@ -3,14 +3,15 @@ import 'package:flutter/material.dart';
 //import 'package:flutter_svg/flutter_svg.dart';
 
 class CustomBottomNavBar extends StatefulWidget {
-  const CustomBottomNavBar({Key? key}) : super(key: key);
+  const CustomBottomNavBar({Key? key, required this.selectedIndex, required this.onSelectedScreen}) : super(key: key);
+  final int selectedIndex;
+  final void Function(int) onSelectedScreen;
 
   @override
   State<CustomBottomNavBar> createState() => _CustomBottomNavBarState();
 }
 
 class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
-  int currentIndex = 0;
 
   static List<NavigationDestination> allDestinations = const [
     //TODO: Adding custom svg icon for the navigation tab
@@ -21,15 +22,16 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
     ),
     NavigationDestination(
       icon: Icon(Icons.book),
-      label: 'History',
+      label: 'Journey',
     ),
   ];
 
   @override
   Widget build(BuildContext context) {
     return NavigationBar(
-      onDestinationSelected: (index) => setState(() => currentIndex = index),
-      selectedIndex: currentIndex,
+      // onDestinationSelected: (index) => print(index),
+      onDestinationSelected: widget.onSelectedScreen,
+      selectedIndex: widget.selectedIndex,
       destinations: [
         for (final destination in allDestinations)
           NavigationDestination(

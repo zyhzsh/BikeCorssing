@@ -1,4 +1,4 @@
-import 'package:BikeCrossing/screens/bikes_screen.dart';
+import 'package:BikeCrossing/screens/home_screen.dart';
 import 'package:BikeCrossing/screens/introduction_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -44,7 +44,7 @@ class _AppState extends State<App> {
       theme: theme,
       home: isOnBoarding?IntroductionScreen(
         onSkipOnBoarding: _skipOnBoarding,
-      ):BikesScreen(),
+      ):HomeScreen(),
     );
   }
 }
