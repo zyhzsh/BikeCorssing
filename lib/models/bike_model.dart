@@ -5,7 +5,7 @@ enum BikeStatus {
   ide,
 }
 
-enum BikeType { Road, Cruiser, Touring, Mountain, Special }
+enum BikeType { road, cruiser, touring, mountain, special }
 
 class BikeModel {
   final String id;
@@ -31,7 +31,7 @@ class BikeModel {
     BikeModel(
         id: 'sample-1',
         name: 'CycleSwoosh',
-        types: [BikeType.Cruiser, BikeType.Road],
+        types: [BikeType.cruiser, BikeType.road],
         status: BikeStatus.ide,
         lastRegisteredLocation: LocationModel(
             latitude: 0.0, longitude: 0.0, address: 'Sample Address'),
@@ -43,7 +43,7 @@ class BikeModel {
     BikeModel(
         id: 'sample-2',
         name: 'VelocityVelo',
-        types: [BikeType.Cruiser, BikeType.Road],
+        types: [BikeType.cruiser, BikeType.road],
         status: BikeStatus.ide,
         lastRegisteredLocation: LocationModel(
             latitude: 0.0, longitude: 0.0, address: 'Sample Address'),
@@ -52,7 +52,7 @@ class BikeModel {
     BikeModel(
         id: 'sample-3',
         name: 'AeroZoom',
-        types: [BikeType.Touring, BikeType.Road],
+        types: [BikeType.touring, BikeType.road],
         status: BikeStatus.ide,
         lastRegisteredLocation: LocationModel(
             latitude: 0.0, longitude: 0.0, address: 'Sample Address'),

@@ -49,6 +49,7 @@ class IntroductionScreen extends StatelessWidget {
                     ),
                     onPressed: onSkipOnBoarding,
                     child: Row(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
                         const Icon(
                           Icons.arrow_circle_right_outlined,
@@ -63,7 +64,7 @@ class IntroductionScreen extends StatelessWidget {
                               .copyWith(
                                 color: Colors.white,
                               ),
-                        )
+                        ),
                       ],
                     )),
               ]),
