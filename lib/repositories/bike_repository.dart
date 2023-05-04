@@ -1,14 +1,18 @@
 import 'package:BikeCrossing/models/bike_model.dart';
 
+//TODO: Get bikes from database
 class BikeRepository {
-  Future<List<BikeModel>> getBikes(BikeType type) async {
+  Future<List<BikeModel>> getBikes() async {
     await Future.delayed(const Duration(seconds: 1));
-    return BikeModel.sampleBikes
-        .where((bike) => bike.types.contains(type))
-        .toList();
+    return BikeModel.sampleBikes; // BikeModel.sampleBikes;
   }
 
-  Future<BikeModel> getBike(String id) async {
+  Future<List<BikeModel>> getBikesByTypes(List<BikeType> types) async {
+    await Future.delayed(const Duration(seconds: 1));
+    return BikeModel.sampleBikes;
+  }
+
+  Future<BikeModel> getBikeById(String id) async {
     await Future.delayed(const Duration(seconds: 1));
     return BikeModel.sampleBikes.firstWhere((bike) => bike.id == id);
   }

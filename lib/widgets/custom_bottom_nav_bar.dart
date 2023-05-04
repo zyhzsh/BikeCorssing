@@ -29,7 +29,6 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
   @override
   Widget build(BuildContext context) {
     return NavigationBar(
-      // onDestinationSelected: (index) => print(index),
       onDestinationSelected: widget.onSelectedScreen,
       selectedIndex: widget.selectedIndex,
       destinations: [
@@ -43,47 +42,3 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
   }
 }
 
-//
-// class _NavBarIcon extends StatelessWidget {
-//   const _NavBarIcon(
-//       {Key? key, required this.icon, required this.label, required this.isSelected, this.onTap})
-//       : super(key: key);
-//
-//   final Icon icon;
-//   final String label;
-//   final bool isSelected;
-//   final Function()? onTap;
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Expanded(
-//       child: InkWell(
-//         onTap: onTap,
-//         child: Column(
-//           mainAxisSize: MainAxisSize.min,
-//           children: [
-//             icon,
-//             Text(label,
-//                 style: Theme
-//                     .of(context)
-//                     .textTheme
-//                     .labelMedium!
-//                     .copyWith(
-//                   fontWeight:
-//                   isSelected ? FontWeight.bold : FontWeight.normal,
-//                   color: isSelected
-//                       ? Theme
-//                       .of(context)
-//                       .colorScheme
-//                       .onSecondary
-//                       : Theme
-//                       .of(context)
-//                       .colorScheme
-//                       .onBackground,
-//                 )),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
