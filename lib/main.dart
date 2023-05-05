@@ -1,9 +1,12 @@
 import 'package:BikeCrossing/screens/home_screen.dart';
 import 'package:BikeCrossing/screens/introduction_screen.dart';
+import 'package:BikeCrossing/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 final theme = ThemeData(
   useMaterial3: true,
@@ -14,17 +17,24 @@ final theme = ThemeData(
   textTheme: GoogleFonts.latoTextTheme(),
 );
 
-void main() {
+
+
+
+Future<void> main() async {
+  //Loading Environment variable file
+  await dotenv.load(fileName: ".env");
+  final supabaseUrl = dotenv.env['SUPABASE_URL'];
+  final supabaseAnonKey = dotenv.env['SUPABASE_ANON_KEY'];
+  await Supabase.initialize(
+    url: supabaseUrl!,
+    anonKey: supabaseAnonKey!,
+  );
   runApp(
     const ProviderScope(
       child: App(),
     ),
   );
 }
-
-
-
-
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -35,6 +45,7 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   bool isOnBoarding = true;
+  bool isLogin = false;
 
   void _skipOnBoarding() {
     setState(() {
@@ -47,9 +58,13 @@ class _AppState extends State<App> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: theme,
-      home: isOnBoarding?IntroductionScreen(
-        onSkipOnBoarding: _skipOnBoarding,
-      ):HomeScreen(),
+      home: isOnBoarding
+          ? IntroductionScreen(
+              onSkipOnBoarding: _skipOnBoarding,
+            )
+          : isLogin
+              ? HomeScreen()
+              : LoginScreen(),
       builder: EasyLoading.init(),
     );
   }

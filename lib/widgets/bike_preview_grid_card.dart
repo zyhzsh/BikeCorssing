@@ -68,7 +68,7 @@ class _BikePreviewGridCardState extends ConsumerState<BikePreviewGridCard> {
                 ),
               ),
             ),
-            Positioned(
+            const Positioned(
               top: 10,
               right: 10,
               child: FavoriteButton(),
@@ -81,15 +81,17 @@ class _BikePreviewGridCardState extends ConsumerState<BikePreviewGridCard> {
                 children: [
                   Text(
                     widget.bike.name,
-                    style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                          color: Colors.white,
-                        ),
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleLarge!
+                        .copyWith(color: Colors.white),
                   ),
                   Text(
                     '${widget.bike.rentalPointsPerDay} Points/Day',
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          color: Colors.white,
-                        ),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge!
+                        .copyWith(color: Colors.white),
                   ),
                   Row(
                     children: [
@@ -99,10 +101,10 @@ class _BikePreviewGridCardState extends ConsumerState<BikePreviewGridCard> {
                         size: 16,
                       ),
                       Text(widget.bike.lastRegisteredLocation.address,
-                          style:
-                              Theme.of(context).textTheme.bodyLarge!.copyWith(
-                                    color: Colors.white,
-                                  )),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyLarge!
+                              .copyWith(color: Colors.white)),
                     ],
                   ),
                 ],
