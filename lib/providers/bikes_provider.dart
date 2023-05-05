@@ -23,7 +23,13 @@ class BikesNotifier extends StateNotifier<List<BikeModel>> {
     state = bikes;
   }
 
+  Future<BikeModel> getBikeById(String id) async{
+    final bike = await _bikeRepository.getBikeById(id);
+    return bike;
+  }
 }
+
+
 
 final bikesProvider = StateNotifierProvider<BikesNotifier, List<BikeModel>>(
     (ref) => BikesNotifier());

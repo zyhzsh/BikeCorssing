@@ -1,4 +1,7 @@
 import 'location_model.dart';
+import 'package:intl/intl.dart';
+
+final formatter = DateFormat.yMd();
 
 enum BikeStatus {
   leased,
@@ -15,31 +18,40 @@ class BikeModel {
   final LocationModel lastRegisteredLocation;
   final int rentalPointsPerDay;
   final List<String> images;
+  final DateTime? createdAt;
 
-  BikeModel({
-    required this.id,
-    required this.name,
-    required this.types,
-    required this.status,
-    required this.lastRegisteredLocation,
-    required this.rentalPointsPerDay,
-    required this.images,
-  });
+  BikeModel(
+      {required this.id,
+      required this.name,
+      required this.types,
+      required this.status,
+      required this.lastRegisteredLocation,
+      required this.rentalPointsPerDay,
+      required this.images,
+      DateTime? createAt})
+      : createdAt = DateTime.now();
+
+  String get formattedDate {
+    return formatter.format(createdAt!);
+  }
+
 
 //e.g: 100P/Day
   static List<BikeModel> sampleBikes = [
     BikeModel(
-        id: 'sample-1',
-        name: 'CycleSwoosh',
-        types: [BikeType.cruiser, BikeType.road],
-        status: BikeStatus.ide,
-        lastRegisteredLocation: LocationModel(
-            latitude: 0.0, longitude: 0.0, address: 'Sample Address'),
-        rentalPointsPerDay: 100,
-        images: [
-          'https://source.unsplash.com/3tYZjGSBwbk/600x400',
-          'https://source.unsplash.com/3tYZjGSBwbk/600x400'
-        ]),
+      id: 'sample-1',
+      name: 'CycleSwoosh',
+      types: [BikeType.cruiser, BikeType.road],
+      status: BikeStatus.ide,
+      lastRegisteredLocation: LocationModel(
+          latitude: 0.0, longitude: 0.0, address: 'Sample Address'),
+      rentalPointsPerDay: 100,
+      images: [
+        'https://source.unsplash.com/3tYZjGSBwbk/300x400',
+        'https://source.unsplash.com/3tYZjGSBwbk/300x400'
+      ],
+      createAt: DateTime(2021, 8, 1),
+    ),
     BikeModel(
         id: 'sample-2',
         name: 'VelocityVelo',
@@ -48,7 +60,7 @@ class BikeModel {
         lastRegisteredLocation: LocationModel(
             latitude: 0.0, longitude: 0.0, address: 'Sample Address'),
         rentalPointsPerDay: 100,
-        images: ['https://source.unsplash.com/3tYZjGSBwbk/600x400']),
+        images: ['https://source.unsplash.com/3tYZjGSBwbk/300x400']),
     BikeModel(
         id: 'sample-3',
         name: 'AeroZoom',
@@ -58,8 +70,8 @@ class BikeModel {
             latitude: 0.0, longitude: 0.0, address: 'Sample Address'),
         rentalPointsPerDay: 100,
         images: [
-          'https://source.unsplash.com/3tYZjGSBwbk/600x400',
-          'https://source.unsplash.com/3tYZjGSBwbk/600x400'
+          'https://source.unsplash.com/3tYZjGSBwbk/300x400',
+          'https://source.unsplash.com/3tYZjGSBwbk/300x400'
         ]),
   ];
 }

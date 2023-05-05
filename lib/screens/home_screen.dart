@@ -1,13 +1,9 @@
-import 'package:BikeCrossing/models/bike_model.dart';
 import 'package:BikeCrossing/screens/bikes_screen.dart';
 import 'package:BikeCrossing/screens/journey_screen.dart';
-import 'package:BikeCrossing/utilities/bike_type_extension.dart';
 import 'package:BikeCrossing/widgets/custom_bottom_nav_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../widgets/bike_preview_grid_card.dart';
-import '../widgets/custom_chip.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

@@ -1,6 +1,7 @@
 import 'package:BikeCrossing/screens/home_screen.dart';
 import 'package:BikeCrossing/screens/introduction_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -20,6 +21,10 @@ void main() {
     ),
   );
 }
+
+
+
+
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -45,6 +50,7 @@ class _AppState extends State<App> {
       home: isOnBoarding?IntroductionScreen(
         onSkipOnBoarding: _skipOnBoarding,
       ):HomeScreen(),
+      builder: EasyLoading.init(),
     );
   }
 }

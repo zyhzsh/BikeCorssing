@@ -25,13 +25,11 @@ class _BikePreviewGridState extends ConsumerState<BikePreviewGrid> {
 
   void loadBikes() async {
     await ref.read(bikesProvider.notifier).getBikes();
-    setState(() {
-      _isLoading = false;
-    });
-  }
-
-  void onSelectedBike(String id) {
-    print(id);
+    if (mounted) {
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 
   @override
@@ -48,7 +46,6 @@ class _BikePreviewGridState extends ConsumerState<BikePreviewGrid> {
           child: const Center(child: CircularProgressIndicator()));
     }
 
-
     if (filteredBikes.isNotEmpty) {
       content = SizedBox(
         height: size.height * 0.6,
@@ -58,11 +55,11 @@ class _BikePreviewGridState extends ConsumerState<BikePreviewGrid> {
               crossAxisCount: 2,
               childAspectRatio: 0.75,
               mainAxisSpacing: 10.0,
+              crossAxisSpacing: 10.0,
             ),
             itemCount: filteredBikes.length,
             itemBuilder: ((context, index) {
               return BikePreviewGridCard(
-                onSelectedBike: onSelectedBike,
                 bike: filteredBikes[index],
                 width: size.width * 0.425,
               );
