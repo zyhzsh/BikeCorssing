@@ -1,34 +1,31 @@
 import 'package:BikeCrossing/models/bike_model.dart';
-import 'package:BikeCrossing/repositories/bike_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-
-
 
 class BikesNotifier extends StateNotifier<List<BikeModel>> {
   BikesNotifier() : super([]);
-  final BikeRepository _bikeRepository = BikeRepository();
 
-  Future<void> getBikes() async{
-    final bikes = await _bikeRepository.getBikes();
+  Future<void> getBikes() async {
+    await Future.delayed(const Duration(seconds: 1));
+    final bikes = BikeModel.sampleBikes;
     state = bikes;
   }
 
-  Future<void> getBikesByTypes(List<BikeType> types) async{
-    if(types.isEmpty) {
+  Future<void> getBikesByTypes(List<BikeType> types) async {
+    if (types.isEmpty) {
       getBikes();
       return;
     }
-    final bikes = await _bikeRepository.getBikesByTypes(types);
+    await Future.delayed(const Duration(seconds: 1));
+    final bikes = BikeModel.sampleBikes;
     state = bikes;
   }
 
-  Future<BikeModel> getBikeById(String id) async{
-    final bike = await _bikeRepository.getBikeById(id);
+  Future<BikeModel> getBikeById(String id) async {
+    await Future.delayed(const Duration(seconds: 1));
+    final bike = BikeModel.sampleBikes.firstWhere((bike) => bike.id == id);
     return bike;
   }
 }
-
 
 final bikesProvider = StateNotifierProvider<BikesNotifier, List<BikeModel>>(
     (ref) => BikesNotifier());

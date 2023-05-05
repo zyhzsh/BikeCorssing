@@ -35,7 +35,6 @@ class BikeModel {
     return formatter.format(createdAt!);
   }
 
-
 //e.g: 100P/Day
   static List<BikeModel> sampleBikes = [
     BikeModel(
@@ -47,8 +46,7 @@ class BikeModel {
           latitude: 0.0, longitude: 0.0, address: 'Sample Address'),
       rentalPointsPerDay: 100,
       images: [
-        'https://source.unsplash.com/3tYZjGSBwbk/300x400',
-        'https://source.unsplash.com/3tYZjGSBwbk/300x400'
+        'https://images.unsplash.com/photo-1507035895480-2b3156c31fc8',
       ],
       createAt: DateTime(2021, 8, 1),
     ),
@@ -60,7 +58,9 @@ class BikeModel {
         lastRegisteredLocation: LocationModel(
             latitude: 0.0, longitude: 0.0, address: 'Sample Address'),
         rentalPointsPerDay: 100,
-        images: ['https://source.unsplash.com/3tYZjGSBwbk/300x400']),
+        images: [
+          'https://images.unsplash.com/photo-1507035895480-2b3156c31fc8',
+        ]),
     BikeModel(
         id: 'sample-3',
         name: 'AeroZoom',
@@ -70,7 +70,7 @@ class BikeModel {
             latitude: 0.0, longitude: 0.0, address: 'Sample Address'),
         rentalPointsPerDay: 100,
         images: [
-          'https://source.unsplash.com/3tYZjGSBwbk/300x400',
+          'https://images.unsplash.com/photo-1507035895480-2b3156c31fc8',
           'https://source.unsplash.com/3tYZjGSBwbk/300x400'
         ]),
     BikeModel(
@@ -82,7 +82,7 @@ class BikeModel {
             latitude: 0.0, longitude: 0.0, address: 'Sample Address'),
         rentalPointsPerDay: 100,
         images: [
-          'https://source.unsplash.com/3tYZjGSBwbk/300x400',
+          'https://images.unsplash.com/photo-1507035895480-2b3156c31fc8',
           'https://source.unsplash.com/3tYZjGSBwbk/300x400'
         ]),
     BikeModel(
@@ -94,7 +94,7 @@ class BikeModel {
             latitude: 0.0, longitude: 0.0, address: 'Sample Address'),
         rentalPointsPerDay: 100,
         images: [
-          'https://source.unsplash.com/3tYZjGSBwbk/300x400',
+          'https://images.unsplash.com/photo-1507035895480-2b3156c31fc8',
           'https://source.unsplash.com/3tYZjGSBwbk/300x400'
         ]),
   ];

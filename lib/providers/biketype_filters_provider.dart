@@ -1,13 +1,10 @@
 import 'package:BikeCrossing/models/bike_model.dart';
-import 'package:BikeCrossing/repositories/bike_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'bikes_provider.dart';
 
 class BikeTypeFiltersNotifier extends StateNotifier<Map<BikeType, bool>> {
   BikeTypeFiltersNotifier() : super(kInitialFilters);
-
-  final BikeRepository _bikeRepository = BikeRepository();
 
   static const kInitialFilters = {
     BikeType.road: false,
