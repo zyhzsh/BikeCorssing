@@ -39,42 +39,7 @@ class BikeDetail extends ConsumerWidget {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    'Placeholder',
-                                    style: Theme.of(context).textTheme.titleLarge,
-                                  ),
-                                  Text(
-                                    'Placeholder',
-                                    style: Theme.of(context).textTheme.titleLarge,
-                                  ),
-                                  Text(
-                                    'Placeholder',
-                                    style: Theme.of(context).textTheme.titleLarge,
-                                  ),   Text(
-                                    'Placeholder',
-                                    style: Theme.of(context).textTheme.titleLarge,
-                                  ),   Text(
-                                    'Placeholder',
-                                    style: Theme.of(context).textTheme.titleLarge,
-                                  ),   Text(
-                                    'Placeholder',
-                                    style: Theme.of(context).textTheme.titleLarge,
-                                  ),   Text(
-                                    'Placeholder',
-                                    style: Theme.of(context).textTheme.titleLarge,
-                                  ),   Text(
-                                    'Placeholder',
-                                    style: Theme.of(context).textTheme.titleLarge,
-                                  ),   Text(
-                                    'Placeholder',
-                                    style: Theme.of(context).textTheme.titleLarge,
-                                  ),   Text(
-                                    'Placeholder',
-                                    style: Theme.of(context).textTheme.titleLarge,
-                                  ),   Text(
-                                    'Placeholder',
-                                    style: Theme.of(context).textTheme.titleLarge,
-                                  ),
+                                  Placeholder(),
                                 ],
                               ),
                             ),
@@ -85,7 +50,9 @@ class BikeDetail extends ConsumerWidget {
                           right: 20,
                           left: 20,
                           child: ElevatedButton(
-                              onPressed: () {}, child: Text(bike.rentalPointsPerDay.toString()+' Point / Day')),
+                              onPressed: () {},
+                              child: Text(bike.rentalPointsPerDay.toString() +
+                                  ' Point / Day')),
                         )
                       ],
                     ),
@@ -114,8 +81,8 @@ class _BasicInfo extends StatelessWidget {
         Text(
           bike.name,
           style: Theme.of(context).textTheme.titleLarge!.copyWith(
-            fontWeight: FontWeight.bold,
-          ),
+                fontWeight: FontWeight.bold,
+              ),
         ),
         const SizedBox(height: 4),
         Row(
@@ -149,19 +116,18 @@ class _BasicInfo extends StatelessWidget {
             Text(
               'Donated by: ',
               style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                fontWeight: FontWeight.w600,
-              ),
+                    fontWeight: FontWeight.w600,
+                  ),
             ),
             SizedBox(width: 2),
             Row(children: [
               CircleAvatar(
                 maxRadius: 14,
-                backgroundImage: NetworkImage(
-                    'http://via.placeholder.com/200x150'),
+                backgroundImage:
+                    NetworkImage('http://via.placeholder.com/200x150'),
               ),
               SizedBox(width: 4),
-              Text('Tom',
-                  style: Theme.of(context).textTheme.bodyMedium),
+              Text('Tom', style: Theme.of(context).textTheme.bodyMedium),
             ]),
           ],
         ),
@@ -171,19 +137,18 @@ class _BasicInfo extends StatelessWidget {
             Text(
               'Last Owner: ',
               style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                fontWeight: FontWeight.w600,
-              ),
+                    fontWeight: FontWeight.w600,
+                  ),
             ),
             SizedBox(width: 2),
             Row(children: [
               CircleAvatar(
                 maxRadius: 14,
-                backgroundImage: NetworkImage(
-                    'http://via.placeholder.com/200x150'),
+                backgroundImage:
+                    NetworkImage('http://via.placeholder.com/200x150'),
               ),
               SizedBox(width: 4),
-              Text('Tom',
-                  style: Theme.of(context).textTheme.bodyMedium),
+              Text('Tom', style: Theme.of(context).textTheme.bodyMedium),
             ]),
           ],
         ),
@@ -251,9 +216,9 @@ class _ImageCarousel extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     return Container(
       height: size.height * 0.32,
-      decoration:  BoxDecoration(
+      decoration: BoxDecoration(
         borderRadius: const BorderRadius.only(
-          topRight:  Radius.circular(20),
+          topRight: Radius.circular(20),
           topLeft: Radius.circular(20),
         ),
         image: DecorationImage(

@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class IntroductionScreen extends StatelessWidget {
-  const IntroductionScreen({Key? key, required this.onSkipOnBoarding})
+  const IntroductionScreen({Key? key, required this.onCompleteOnBoarding})
       : super(key: key);
 
-  final void Function() onSkipOnBoarding;
+  final void Function() onCompleteOnBoarding;
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +47,7 @@ class IntroductionScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(14.0),
                       ),
                     ),
-                    onPressed: onSkipOnBoarding,
+                    onPressed: onCompleteOnBoarding,
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [

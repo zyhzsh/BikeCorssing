@@ -1,8 +1,8 @@
+
 import 'package:BikeCrossing/screens/home_screen.dart';
 import 'package:BikeCrossing/screens/introduction_screen.dart';
 import 'package:BikeCrossing/screens/login_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -16,9 +16,6 @@ final theme = ThemeData(
   ),
   textTheme: GoogleFonts.latoTextTheme(),
 );
-
-
-
 
 Future<void> main() async {
   //Loading Environment variable file
@@ -45,13 +42,26 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   bool isOnBoarding = true;
-  bool isLogin = false;
+  late bool isLogin;
 
-  void _skipOnBoarding() {
+  void _onCompleteOnBoarding() {
     setState(() {
       isOnBoarding = false;
     });
   }
+
+  void _onSuccessfulLogIn() {
+    setState(() {
+      isLogin = true;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    isLogin = Supabase.instance.client.auth.currentSession != null;
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -60,12 +70,11 @@ class _AppState extends State<App> {
       theme: theme,
       home: isOnBoarding
           ? IntroductionScreen(
-              onSkipOnBoarding: _skipOnBoarding,
+              onCompleteOnBoarding: _onCompleteOnBoarding,
             )
           : isLogin
               ? HomeScreen()
-              : LoginScreen(),
-      builder: EasyLoading.init(),
+              : LogInScreen(onSuccessfulLogIn:_onSuccessfulLogIn),
     );
   }
 }
