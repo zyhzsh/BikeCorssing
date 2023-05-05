@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/bike_model.dart';
 import '../providers/bikes_provider.dart';
 import 'bike_detail.dart';
+import 'bike_favorite_button.dart';
 
 class BikePreviewGridCard extends ConsumerStatefulWidget {
   const BikePreviewGridCard({
@@ -25,14 +26,14 @@ class _BikePreviewGridCardState extends ConsumerState<BikePreviewGridCard> {
   late final ImageProvider _imageProvider = NetworkImage(widget.bike.images[0]);
   late BuildContext dialogContext;
 
-
   void _showBikeDetail() async {
     showDialog(
       barrierDismissible: false,
       context: context,
       builder: (context) => const Center(child: CircularProgressIndicator()),
     );
-    final bike = await ref.read(bikesProvider.notifier).getBikeById(widget.bike.id);
+    final bike =
+        await ref.read(bikesProvider.notifier).getBikeById(widget.bike.id);
     Navigator.of(context).pop();
     showModalBottomSheet(
         isScrollControlled: true,
@@ -70,20 +71,7 @@ class _BikePreviewGridCardState extends ConsumerState<BikePreviewGridCard> {
             Positioned(
               top: 10,
               right: 10,
-              child: GestureDetector(
-                onTap: () => print("Favorite"),
-                child: Container(
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.secondaryContainer,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: const Icon(
-                    Icons.favorite,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
+              child: FavoriteButton(),
             ),
             Positioned(
               bottom: 10,

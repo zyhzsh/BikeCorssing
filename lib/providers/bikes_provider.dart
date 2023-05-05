@@ -30,6 +30,5 @@ class BikesNotifier extends StateNotifier<List<BikeModel>> {
 }
 
 
-
 final bikesProvider = StateNotifierProvider<BikesNotifier, List<BikeModel>>(
     (ref) => BikesNotifier());

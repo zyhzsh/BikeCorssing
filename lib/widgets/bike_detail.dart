@@ -1,3 +1,4 @@
+import 'package:BikeCrossing/widgets/bike_favorite_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -17,17 +18,39 @@ class BikeDetail extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+
           Container(
             height: 200,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                topRight: Radius.circular(20),
+            decoration:  BoxDecoration(
+              borderRadius: const BorderRadius.only(
+                topRight:  Radius.circular(20),
                 topLeft: Radius.circular(20),
               ),
               image: DecorationImage(
                 image: NetworkImage(bike.images[0]),
                 fit: BoxFit.cover,
               ),
+            ),
+            child: Stack(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Colors.transparent,
+                        Colors.black.withOpacity(0.7),
+                      ],
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 20,
+                  right: 20,
+                  child: FavoriteButton(size: 20),
+                ),
+              ],
             ),
           ),
           const SizedBox(height: 20),
