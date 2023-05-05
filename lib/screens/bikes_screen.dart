@@ -31,29 +31,27 @@ class _SearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Flexible(
-      child: TextFormField(
-          onChanged: (value) {},
-          decoration: InputDecoration(
-            hintText: 'Search bike',
-            hintStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
-              fontSize: 16,
-              color: Theme.of(context).colorScheme.onBackground,
-            ),
-            prefixIcon: Icon(
-              Icons.search,
-              color: Theme.of(context).colorScheme.onBackground,
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide.none,
-            ),
-            filled: true,
-            fillColor: Theme.of(context)
-                .colorScheme
-                .secondaryContainer
-                .withOpacity(0.2),
-          )),
-    );
+    return TextFormField(
+        onChanged: (value) {},
+        decoration: InputDecoration(
+          hintText: 'Search bike',
+          hintStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
+            fontSize: 16,
+            color: Theme.of(context).colorScheme.onBackground,
+          ),
+          prefixIcon: Icon(
+            Icons.search,
+            color: Theme.of(context).colorScheme.onBackground,
+          ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide.none,
+          ),
+          filled: true,
+          fillColor: Theme.of(context)
+              .colorScheme
+              .secondaryContainer
+              .withOpacity(0.2),
+        ));
   }
 }

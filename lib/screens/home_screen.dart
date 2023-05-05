@@ -1,4 +1,5 @@
 import 'package:BikeCrossing/screens/bikes_screen.dart';
+import 'package:BikeCrossing/screens/favorite_screen.dart';
 import 'package:BikeCrossing/screens/journey_screen.dart';
 import 'package:BikeCrossing/widgets/custom_bottom_nav_bar.dart';
 import 'package:flutter/cupertino.dart';
@@ -39,6 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: [
         BikesScreen(),
         JourneyScreen(),
+        FavoriteScreen(),
       ][selectedScreenIndex],
       bottomNavigationBar:  CustomBottomNavBar(
         selectedIndex: selectedScreenIndex,

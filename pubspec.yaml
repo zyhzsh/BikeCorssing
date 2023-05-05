@@ -17,6 +17,7 @@ dependencies:
   flutter_svg: ^1.1.6
   flutter_easyloading: ^3.0.5
   intl: ^0.18.1
+  supabase_flutter: ^1.8.1
 
 dev_dependencies:
   flutter_test:
@@ -27,20 +28,23 @@ dev_dependencies:
 
 
 flutter_native_splash:
-  color: "#F7F8F7"
+  #color: "#F7F8F7"
   #color: "#ffffff"
   #background_image: assets/images/splash.png
   #image: assets/images/splash_image_icon.png
+  background_image: assets/images/splash_image.jpg
+  full_screen: true
   #Run Command to auto generate splash screen: "flutter pub run flutter_native_splash:create"
   android_12:
     color: "#F7F8F7"
-    image: assets/images/logo_icon.png
+    image: assets/images/onboarding_bg.jpg
+    #background_image: assets/images/onboarding_bg.jpg
 
 
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/images/logo_icon.png"
+  image_path: "assets/images/logo_icon.jpg"
   min_sdk_android: 21 # android min sdk min:16,default 21
   #Run Command to auto generate logo: "flutter pub run flutter_launcher_icons"
 

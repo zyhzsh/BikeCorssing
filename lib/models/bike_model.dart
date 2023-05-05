@@ -73,5 +73,29 @@ class BikeModel {
           'https://source.unsplash.com/3tYZjGSBwbk/300x400',
           'https://source.unsplash.com/3tYZjGSBwbk/300x400'
         ]),
+    BikeModel(
+        id: 'sample-4',
+        name: 'XXXXX-4',
+        types: [BikeType.touring, BikeType.road],
+        status: BikeStatus.ide,
+        lastRegisteredLocation: LocationModel(
+            latitude: 0.0, longitude: 0.0, address: 'Sample Address'),
+        rentalPointsPerDay: 100,
+        images: [
+          'https://source.unsplash.com/3tYZjGSBwbk/300x400',
+          'https://source.unsplash.com/3tYZjGSBwbk/300x400'
+        ]),
+    BikeModel(
+        id: 'sample-5',
+        name: 'XXXXX-5',
+        types: [BikeType.touring, BikeType.road],
+        status: BikeStatus.ide,
+        lastRegisteredLocation: LocationModel(
+            latitude: 0.0, longitude: 0.0, address: 'Sample Address'),
+        rentalPointsPerDay: 100,
+        images: [
+          'https://source.unsplash.com/3tYZjGSBwbk/300x400',
+          'https://source.unsplash.com/3tYZjGSBwbk/300x400'
+        ]),
   ];
 }

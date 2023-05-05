@@ -24,6 +24,10 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
       icon: Icon(Icons.book),
       label: 'Journey',
     ),
+    NavigationDestination(
+      icon: Icon(Icons.favorite),
+      label: 'Favorite',
+    ),
   ];
 
   @override
