@@ -81,31 +81,31 @@ class _LogInScreenState extends State<LogInScreen> {
                     ),
                   ),
                 ),
-                Container(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                      onPressed: () async {
-                        try {
-                          await Supabase.instance.client.auth.signInWithOAuth(
-                              Provider.google,
-                              redirectTo: kIsWeb
-                                  ? null
-                                  : 'io.supabase.flutterquickstart://login-callback/');
-                          print('success');
-                        } catch (e) {
-                          print('eeee');
-                        } finally {
-                          print('finally');
-                        }
-                      },
-                      child: Text(
-                        'Login',
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                              color: Theme.of(context).colorScheme.primary,
-                              fontWeight: FontWeight.bold,
-                            ),
-                      )),
-                ),
+                // Container(
+                //   width: double.infinity,
+                //   child: ElevatedButton(
+                //       onPressed: () async {
+                //         try {
+                //           await Supabase.instance.client.auth.signInWithOAuth(
+                //               Provider.google,
+                //               redirectTo: kIsWeb
+                //                   ? null
+                //                   : 'io.supabase.flutterquickstart://login-callback/');
+                //           print('success');
+                //         } catch (e) {
+                //           print('eeee');
+                //         } finally {
+                //           print('finally');
+                //         }
+                //       },
+                //       child: Text(
+                //         'Login',
+                //         style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                //               color: Theme.of(context).colorScheme.primary,
+                //               fontWeight: FontWeight.bold,
+                //             ),
+                //       )),
+                // ),
                 SupaSocialsAuth(
                   colored: true,
                   redirectUrl: kIsWeb
@@ -119,6 +119,7 @@ class _LogInScreenState extends State<LogInScreen> {
                   },
                   onError: (error) {
                     print(error);
+
                     // do something, for example: navigate("wait_for_email");
                   },
                 ),

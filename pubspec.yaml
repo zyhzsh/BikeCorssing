@@ -19,6 +19,7 @@ dependencies:
   supabase_flutter: ^1.8.1
   flutter_dotenv: ^5.0.2
   supabase_auth_ui: ^0.1.0+2
+  location: ^4.4.0
 
 dev_dependencies:
   flutter_test:

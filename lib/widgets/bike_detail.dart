@@ -1,3 +1,4 @@
+import 'package:BikeCrossing/screens/navigation_screen.dart';
 import 'package:BikeCrossing/widgets/bike_favorite_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,7 @@ class BikeDetail extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.of(context).size;
     return FractionallySizedBox(
-      heightFactor: 0.90,
+      heightFactor: 0.88,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -50,7 +51,9 @@ class BikeDetail extends ConsumerWidget {
                           right: 20,
                           left: 20,
                           child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => NavigationScreen()));
+                              },
                               child: Text(bike.rentalPointsPerDay.toString() +
                                   ' Point / Day')),
                         )

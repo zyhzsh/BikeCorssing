@@ -1,4 +1,4 @@
-
+import 'package:BikeCrossing/providers/profile_provider.dart';
 import 'package:BikeCrossing/screens/home_screen.dart';
 import 'package:BikeCrossing/screens/introduction_screen.dart';
 import 'package:BikeCrossing/screens/login_screen.dart';
@@ -33,14 +33,14 @@ Future<void> main() async {
   );
 }
 
-class App extends StatefulWidget {
+class App extends ConsumerStatefulWidget {
   const App({super.key});
 
   @override
-  State<App> createState() => _AppState();
+  ConsumerState<App> createState() => _AppState();
 }
 
-class _AppState extends State<App> {
+class _AppState extends ConsumerState<App> {
   bool isOnBoarding = true;
   late bool isLogin;
 
@@ -54,14 +54,17 @@ class _AppState extends State<App> {
     setState(() {
       isLogin = true;
     });
+    ref.read(userProfileProvider.notifier).getCurrentProfile();
   }
 
   @override
   void initState() {
     super.initState();
     isLogin = Supabase.instance.client.auth.currentSession != null;
+    if (isLogin) {
+      ref.read(userProfileProvider.notifier).getCurrentProfile();
+    }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +77,7 @@ class _AppState extends State<App> {
             )
           : isLogin
               ? HomeScreen()
-              : LogInScreen(onSuccessfulLogIn:_onSuccessfulLogIn),
+              : LogInScreen(onSuccessfulLogIn: _onSuccessfulLogIn),
     );
   }
 }

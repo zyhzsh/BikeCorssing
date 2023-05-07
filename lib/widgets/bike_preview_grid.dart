@@ -1,9 +1,8 @@
 import 'package:BikeCrossing/providers/bikes_provider.dart';
+import 'package:BikeCrossing/providers/location_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../models/bike_model.dart';
 import '../providers/biketype_filters_provider.dart';
 import 'bike_preview_grid_card.dart';
 
