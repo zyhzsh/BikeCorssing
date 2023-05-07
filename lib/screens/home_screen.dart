@@ -1,3 +1,4 @@
+import 'package:BikeCrossing/providers/location_provider.dart';
 import 'package:BikeCrossing/providers/profile_provider.dart';
 import 'package:BikeCrossing/screens/bikes_screen.dart';
 import 'package:BikeCrossing/screens/favorite_screen.dart';
@@ -21,11 +22,17 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     setState(() {
       selectedScreenIndex = selectedIndex;
     });
+    //Update user current location
+    ref.read(userLocationProvider.notifier).getCurrentLocation();
   }
 
 
-
-
+  @override
+  void initState() {
+    super.initState();
+    //Update user current location
+    ref.read(userLocationProvider.notifier).getCurrentLocation();
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -1,7 +1,8 @@
+import 'package:BikeCrossing/providers/location_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
+import '../utilities/location_distance_extension.dart';
 import '../models/bike_model.dart';
 import '../providers/bikes_provider.dart';
 import 'bike_detail.dart';
@@ -40,6 +41,14 @@ class _BikePreviewGridCardState extends ConsumerState<BikePreviewGridCard> {
         context: context,
         builder: (context) => BikeDetail(bike: bike));
   }
+  
+  String _getDistance()  {
+    final bikeLat = widget.bike.lastRegisteredLocation.latitude;
+    final bikeLng = widget.bike.lastRegisteredLocation.longitude;
+    final currentLocation = ref.read(userLocationProvider);
+    return '${currentLocation.calculateDistance(bikeLat, bikeLng)} km';
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +76,15 @@ class _BikePreviewGridCardState extends ConsumerState<BikePreviewGridCard> {
                   ],
                 ),
               ),
+            ),
+            Positioned(
+              top: 10,
+              left: 10,
+              child: Text(_getDistance(),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyLarge!
+                      .copyWith(color: Colors.white)),
             ),
             const Positioned(
               top: 10,

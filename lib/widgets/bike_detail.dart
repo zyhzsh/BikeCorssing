@@ -2,18 +2,17 @@ import 'package:BikeCrossing/screens/navigation_screen.dart';
 import 'package:BikeCrossing/widgets/bike_favorite_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/bike_model.dart';
 
-class BikeDetail extends ConsumerWidget {
+class BikeDetail extends StatelessWidget {
   const BikeDetail({Key? key, required this.bike}) : super(key: key);
   final BikeModel bike;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return FractionallySizedBox(
-      heightFactor: 0.88,
+      heightFactor: 0.90,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
