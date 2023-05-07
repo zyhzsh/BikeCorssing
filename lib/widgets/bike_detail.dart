@@ -1,15 +1,18 @@
+import 'package:BikeCrossing/models/location_model.dart';
+import 'package:BikeCrossing/providers/location_provider.dart';
 import 'package:BikeCrossing/screens/navigation_screen.dart';
 import 'package:BikeCrossing/widgets/bike_favorite_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/bike_model.dart';
 
-class BikeDetail extends StatelessWidget {
+class BikeDetail extends ConsumerWidget {
   const BikeDetail({Key? key, required this.bike}) : super(key: key);
   final BikeModel bike;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.of(context).size;
     return FractionallySizedBox(
       heightFactor: 0.90,
@@ -50,8 +53,19 @@ class BikeDetail extends StatelessWidget {
                           right: 20,
                           left: 20,
                           child: ElevatedButton(
-                              onPressed: () {
-                              Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => NavigationScreen()));
+                              onPressed: () async {
+                                LocationModel currentLocation = await ref
+                                    .read(userLocationProvider.notifier)
+                                    .getCurrentLocation();
+                                print('--------------------------------');
+                                print(currentLocation.latitude);
+                                print(currentLocation.longitude);
+                                print('--------------------------------');
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (ctx) => NavigationScreen(
+                                          startLocation: currentLocation,
+                                          bike: bike,
+                                        )));
                               },
                               child: Text(bike.rentalPointsPerDay.toString() +
                                   ' Point / Day')),

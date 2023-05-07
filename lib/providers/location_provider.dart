@@ -51,7 +51,7 @@ class LocationService {
 
 class LocationNotifier extends StateNotifier<LocationModel> {
   LocationNotifier() : super(LocationModel.sampleLocation);
-  Future<void> getCurrentLocation() async {
+  Future<LocationModel> getCurrentLocation() async {
     LocationService locationService = LocationService();
     final data = await locationService.getLocation();
     if (data != null) {
@@ -61,7 +61,10 @@ class LocationNotifier extends StateNotifier<LocationModel> {
         address: 'Unknown',
       );
     }
+    return state;
   }
+
+
 }
 
 final userLocationProvider =

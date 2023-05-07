@@ -43,7 +43,7 @@ class BikeModel {
       types: [BikeType.cruiser, BikeType.road],
       status: BikeStatus.ide,
       lastRegisteredLocation: LocationModel(
-          latitude: 0.0, longitude: 0.0, address: 'Sample Address'),
+          latitude: 51.454583, longitude: 5.438979, address: 'Sample Address'),
       rentalPointsPerDay: 100,
       images: [
         'https://images.unsplash.com/photo-1507035895480-2b3156c31fc8',
@@ -56,7 +56,7 @@ class BikeModel {
         types: [BikeType.cruiser, BikeType.road],
         status: BikeStatus.ide,
         lastRegisteredLocation: LocationModel(
-            latitude: 0.0, longitude: 0.0, address: 'Sample Address'),
+            latitude: 51.423653, longitude: 5.448694, address: 'Sample Address'),
         rentalPointsPerDay: 100,
         images: [
           'https://images.unsplash.com/photo-1507035895480-2b3156c31fc8',
@@ -67,7 +67,7 @@ class BikeModel {
         types: [BikeType.touring, BikeType.road],
         status: BikeStatus.ide,
         lastRegisteredLocation: LocationModel(
-            latitude: 0.0, longitude: 0.0, address: 'Sample Address'),
+            latitude: 51.458495, longitude: 5.466570, address: 'Sample Address'),
         rentalPointsPerDay: 100,
         images: [
           'https://images.unsplash.com/photo-1507035895480-2b3156c31fc8',
@@ -79,7 +79,7 @@ class BikeModel {
         types: [BikeType.touring, BikeType.road],
         status: BikeStatus.ide,
         lastRegisteredLocation: LocationModel(
-            latitude: 0.0, longitude: 0.0, address: 'Sample Address'),
+            latitude: 51.437643, longitude: 5.407942, address: 'Sample Address'),
         rentalPointsPerDay: 100,
         images: [
           'https://images.unsplash.com/photo-1507035895480-2b3156c31fc8',
@@ -87,11 +87,11 @@ class BikeModel {
         ]),
     BikeModel(
         id: 'sample-5',
-        name: 'XXXXX-5',
+        name: 'T-5',
         types: [BikeType.touring, BikeType.road],
         status: BikeStatus.ide,
         lastRegisteredLocation: LocationModel(
-            latitude: 0.0, longitude: 0.0, address: 'Sample Address'),
+            latitude: 51.562, longitude: 5.04952, address: 'Sample Address'),
         rentalPointsPerDay: 100,
         images: [
           'https://images.unsplash.com/photo-1507035895480-2b3156c31fc8',

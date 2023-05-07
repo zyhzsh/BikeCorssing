@@ -20,6 +20,8 @@ dependencies:
   flutter_dotenv: ^5.0.2
   supabase_auth_ui: ^0.1.0+2
   location: ^4.4.0
+  google_maps_flutter: ^2.2.6
+  flutter_polyline_points: ^1.0.0
 
 dev_dependencies:
   flutter_test:

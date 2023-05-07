@@ -10,8 +10,8 @@ class LocationModel {
   });
 
   static LocationModel sampleLocation = LocationModel(
-    latitude: 37.422,
-    longitude: -122.084,
-    address: '1600 Amphitheatre Parkway, Mountain View, CA',
+    latitude: 51.446663,
+    longitude:5.476954,
+    address: '....',
   );
 }
