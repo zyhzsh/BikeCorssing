@@ -1,15 +1,25 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class FavoriteButton extends StatelessWidget {
-  const FavoriteButton({Key? key,  this.size=20}) : super(key: key);
+import '../providers/profile_provider.dart';
 
+class FavoriteButton extends ConsumerWidget {
+  const FavoriteButton({Key? key, this.size = 20, required this.bikeId})
+      : super(key: key);
+
+  final String bikeId;
   final double? size;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isFavorite =
+        ref.watch(userProfileProvider).favoriteBikes.contains(bikeId);
+
     return GestureDetector(
-      onTap: () => print("Favorite"),
+      onTap: () {
+        ref.read(userProfileProvider.notifier).updateFavoriteBike(bikeId);
+      },
       child: Container(
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
@@ -19,7 +29,7 @@ class FavoriteButton extends StatelessWidget {
         child: Icon(
           size: size,
           Icons.favorite,
-          color: Colors.white,
+          color: isFavorite?Colors.redAccent:Colors.white,
         ),
       ),
     );

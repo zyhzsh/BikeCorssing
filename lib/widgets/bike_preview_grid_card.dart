@@ -86,10 +86,10 @@ class _BikePreviewGridCardState extends ConsumerState<BikePreviewGridCard> {
                       .bodyLarge!
                       .copyWith(color: Colors.white)),
             ),
-            const Positioned(
+             Positioned(
               top: 10,
               right: 10,
-              child: FavoriteButton(),
+              child: FavoriteButton(bikeId: widget.bike.id,size: 20),
             ),
             Positioned(
               bottom: 10,

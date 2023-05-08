@@ -17,7 +17,7 @@ class UserProfileModel {
     avatarUrl:
         'https://images.unsplash.com/photo-1507035895480-2b3156c31fc8',
     remainingPoints: 1200,
-    favoriteBikes: [],
+    favoriteBikes: ['sample-1', 'sample-2'],
   );
   static UserProfileModel defaultUser = const UserProfileModel(
     id: 'sample-1',
@@ -25,6 +25,7 @@ class UserProfileModel {
     avatarUrl:
     'https://images.unsplash.com/photo-1507035895480-2b3156c31fc8',
     remainingPoints: 2250,
-    favoriteBikes: [],
+    favoriteBikes: ['sample-1', 'sample-2'],
   );
+
 }

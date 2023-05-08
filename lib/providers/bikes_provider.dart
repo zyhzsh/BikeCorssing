@@ -5,7 +5,7 @@ class BikesNotifier extends StateNotifier<List<BikeModel>> {
   BikesNotifier() : super([]);
 
   Future<void> getBikes() async {
-    await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(const Duration(milliseconds: 200));
     final bikes = BikeModel.sampleBikes;
     state = bikes;
   }
@@ -21,9 +21,18 @@ class BikesNotifier extends StateNotifier<List<BikeModel>> {
   }
 
   Future<BikeModel> getBikeById(String id) async {
-    await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(const Duration(milliseconds: 200));
     final bike = BikeModel.sampleBikes.firstWhere((bike) => bike.id == id);
     return bike;
+  }
+
+  Future<List<BikeModel>> getBikesByIds(List<String> ids) async {
+    final bikes = <BikeModel>[];
+    for (final id in ids) {
+      final bike = await getBikeById(id);
+      bikes.add(bike);
+    }
+    return bikes;
   }
 }
 

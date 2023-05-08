@@ -57,10 +57,6 @@ class BikeDetail extends ConsumerWidget {
                                 LocationModel currentLocation = await ref
                                     .read(userLocationProvider.notifier)
                                     .getCurrentLocation();
-                                print('--------------------------------');
-                                print(currentLocation.latitude);
-                                print(currentLocation.longitude);
-                                print('--------------------------------');
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (ctx) => NavigationScreen(
                                           startLocation: currentLocation,
@@ -259,7 +255,7 @@ class _ImageCarousel extends StatelessWidget {
           Positioned(
             top: 20,
             right: 20,
-            child: FavoriteButton(size: 20),
+            child: FavoriteButton(bikeId: bike.id,size: 20),
           ),
         ],
       ),

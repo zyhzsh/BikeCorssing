@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:BikeCrossing/screens/qrscanner_screen.dart';
 import 'package:flutter/rendering.dart';
 import 'package:BikeCrossing/models/location_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -36,40 +37,38 @@ class _NavigationScreenState extends State<NavigationScreen> {
 
   void addCustomIcon() async {
     BitmapDescriptor.fromAssetImage(
-        const ImageConfiguration(
-          size: Size(20, 20),
-        ), "assets/images/location_marker_start.png")
+            const ImageConfiguration(
+              size: Size(20, 20),
+            ),
+            "assets/images/location_marker_start.png")
         .then(
-          (icon) {
+      (icon) {
         setState(() {
           startMarker = icon;
         });
       },
     );
     BitmapDescriptor.fromAssetImage(
-        const ImageConfiguration(
-          size: Size(20, 20),
-        ), "assets/images/location_marker_destination.png")
+            const ImageConfiguration(
+              size: Size(20, 20),
+            ),
+            "assets/images/location_marker_destination.png")
         .then(
-          (icon) {
+      (icon) {
         setState(() {
           destinationMarker = icon;
         });
       },
     );
-    BitmapDescriptor.fromAssetImage(
-        const ImageConfiguration(
-
-        ), "assets/images/location_marker_current.png")
+    BitmapDescriptor.fromAssetImage(const ImageConfiguration(),
+            "assets/images/location_marker_current.png")
         .then(
-          (icon) {
+      (icon) {
         setState(() {
           currentMarker = icon;
         });
       },
     );
-
-
     // Uint8List destinationMarkerByte =
     //     (await NetworkAssetBundle(Uri.parse(widget.bike.images[0]))
     //             .load(widget.bike.images[0]))
@@ -81,14 +80,26 @@ class _NavigationScreenState extends State<NavigationScreen> {
     // });
   }
 
-  void getCurrentLocation() async {
+  void initCameraPosition()async{
     location.getLocation().then((location) => {
-          setState(() {
-            currentLocation = location;
-          })
-        });
+      setState(() {
+        currentLocation = location;
+      })
+    });
     GoogleMapController googleMapController = await _controller.future;
+    googleMapController.animateCamera(
+      CameraUpdate.newCameraPosition(
+        CameraPosition(
+          target: LatLng(currentLocation!.latitude!, currentLocation!.longitude!),
+          zoom: 13.5,
+        ),
+      ),
+    );
+  }
 
+
+  void getCurrentLocation() async {
+    GoogleMapController googleMapController = await _controller.future;
     locationSubscription =
         location.onLocationChanged.listen((LocationData currentLocation) {
       googleMapController.animateCamera(
@@ -100,7 +111,6 @@ class _NavigationScreenState extends State<NavigationScreen> {
           ),
         ),
       );
-
       setState(() {
         this.currentLocation = currentLocation;
       });
@@ -124,65 +134,96 @@ class _NavigationScreenState extends State<NavigationScreen> {
       setState(() {});
     }
   }
+
+  void _scanQr() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+          builder: (context) => QrScannerScreen(bike: widget.bike)),
+    );
+  }
+
   @override
   void initState() {
+    initCameraPosition();
     getCurrentLocation();
     getPolyPoints();
     addCustomIcon();
     super.initState();
   }
+
   @override
   void dispose() {
     locationSubscription.cancel();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Theme.of(context).colorScheme.secondary,
+        onPressed: _scanQr,
+        child: const Icon(Icons.qr_code_scanner, color: Colors.white),
+      ),
       body: currentLocation == null
           ? Center(
               child: CircularProgressIndicator(),
             )
-          : GoogleMap(
-              myLocationButtonEnabled: true,
-              mapType: MapType.hybrid,
-              initialCameraPosition: CameraPosition(
-                target: LatLng(widget.startLocation.latitude,
-                    widget.startLocation.longitude),
-                zoom: 10,
+          : Stack(
+            children: [
+              GoogleMap(
+                  myLocationButtonEnabled: true,
+                  initialCameraPosition: CameraPosition(
+                    target: LatLng(widget.startLocation.latitude,
+                        widget.startLocation.longitude),
+                    zoom: 10,
+                  ),
+                  polylines: {
+                    Polyline(
+                      polylineId: const PolylineId('route'),
+                      color: Theme.of(context).colorScheme.primary,
+                      points: polylineCoordinates,
+                      width: 6,
+                    ),
+                  },
+                  markers: {
+                    Marker(
+                      markerId: const MarkerId('start'),
+                      position: LatLng(widget.startLocation.latitude,
+                          widget.startLocation.longitude),
+                      icon: startMarker,
+                    ),
+                    Marker(
+                      markerId: const MarkerId('current'),
+                      position: LatLng(
+                          currentLocation!.latitude!, currentLocation!.longitude!),
+                      icon: currentMarker,
+                    ),
+                    Marker(
+                      markerId: const MarkerId('destination'),
+                      position: LatLng(widget.bike.lastRegisteredLocation.latitude,
+                          widget.bike.lastRegisteredLocation.longitude),
+                      infoWindow: InfoWindow(
+                        title: widget.bike.name,
+                        snippet: widget.bike.lastRegisteredLocation.address,
+                      ),
+                      icon: destinationMarker,
+                    ),
+                  },
+                  onMapCreated: (mapController) {
+                    _controller.complete(mapController);
+                  },
+                ),
+              Positioned(
+                top: 70,
+                left: 20,
+                child: ElevatedButton.icon(onPressed: (){
+                  Navigator.pop(context);
+                }, icon: Icon(Icons.arrow_circle_left_outlined), label: Text('Back')),
               ),
-              polylines: {
-                Polyline(
-                  polylineId: const PolylineId('route'),
-                  color: Theme.of(context).colorScheme.primary,
-                  points: polylineCoordinates,
-                  width: 6,
-                ),
-              },
-              markers: {
-                Marker(
-                  markerId: const MarkerId('start'),
-                  position: LatLng(widget.startLocation.latitude,
-                      widget.startLocation.longitude),
-                  icon: startMarker,
-                ),
-                Marker(
-                  markerId: const MarkerId('current'),
-                  position: LatLng(
-                      currentLocation!.latitude!, currentLocation!.longitude!),
-                  icon: currentMarker,
-                ),
-                Marker(
-                  markerId: const MarkerId('destination'),
-                  position: LatLng(widget.bike.lastRegisteredLocation.latitude,
-                      widget.bike.lastRegisteredLocation.longitude),
-                  icon: destinationMarker,
-                ),
-              },
-              onMapCreated: (mapController) {
-                _controller.complete(mapController);
-              },
-            ),
+            ],
+          ),
     );
   }
 }

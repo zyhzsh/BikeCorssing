@@ -10,7 +10,26 @@ class UserProfileNotifier extends StateNotifier<UserProfileModel> {
     await Future.delayed(const Duration(seconds: 1));
     state = UserProfileModel.sampleUser;
   }
+
+  void updateFavoriteBike(String bikeId) {
+    final isFavoriteBike = state.favoriteBikes.contains(bikeId);
+    final favoriteBikes = [...state.favoriteBikes];
+    if(isFavoriteBike) {
+      favoriteBikes.remove(bikeId);
+    } else {
+      favoriteBikes.add(bikeId);
+    }
+   final newState = UserProfileModel(
+      id: state.id,
+      userName: state.userName,
+      avatarUrl: state.avatarUrl,
+      remainingPoints: state.remainingPoints,
+      favoriteBikes: favoriteBikes,
+    );
+    state = newState;
+  }
 }
 
 final userProfileProvider = StateNotifierProvider<UserProfileNotifier,UserProfileModel>(
-        (ref) => UserProfileNotifier());
+        (ref) => UserProfileNotifier(
+        ));
