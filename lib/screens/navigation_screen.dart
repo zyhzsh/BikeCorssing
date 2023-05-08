@@ -1,3 +1,4 @@
+import 'dart:io' show Platform;
 import 'dart:async';
 import 'package:BikeCrossing/screens/qrscanner_screen.dart';
 import 'package:flutter/rendering.dart';
@@ -5,6 +6,7 @@ import 'package:BikeCrossing/models/location_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
@@ -119,9 +121,21 @@ class _NavigationScreenState extends State<NavigationScreen> {
 
   void getPolyPoints() async {
     PolylinePoints polylinePoints = PolylinePoints();
+    await dotenv.load(fileName: ".env");
+    final IOSAPIKEY = dotenv.env['GOOGLEMAPS_IOS_API_KEY'];
+    final ANDROIDAPIKEY = dotenv.env['GOOGLEMAPS_ANDROID_API_KEY'];
+
+
+    String MapApiKey = '';
+
+    if (Platform.isAndroid) {
+      MapApiKey = ANDROIDAPIKEY!;}
+    else if (Platform.isIOS) {
+      MapApiKey = IOSAPIKEY!;
+    }
 
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-      'AIzaSyC9bn22ZcoAiJVJJAEYTziTrdkCDuV-F1I',
+      MapApiKey,
       PointLatLng(
           widget.startLocation.latitude, widget.startLocation.longitude),
       PointLatLng(widget.bike.lastRegisteredLocation.latitude,
