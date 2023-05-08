@@ -1,5 +1,7 @@
+import 'package:BikeCrossing/models/bike_model.dart';
 import 'package:BikeCrossing/providers/bikes_provider.dart';
 import 'package:BikeCrossing/providers/location_provider.dart';
+import 'package:BikeCrossing/utilities/location_distance_extension.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -34,6 +36,7 @@ class _BikePreviewGridState extends ConsumerState<BikePreviewGrid> {
   @override
   Widget build(BuildContext context) {
     final filteredBikes = ref.watch(filteredBikesProvider);
+    final myLocation = ref.watch(userLocationProvider);
     final size = MediaQuery.of(context).size;
 
     Widget content = SizedBox(
@@ -44,8 +47,13 @@ class _BikePreviewGridState extends ConsumerState<BikePreviewGrid> {
           height: size.height * 0.4,
           child: const Center(child: CircularProgressIndicator()));
     }
-
     if (filteredBikes.isNotEmpty) {
+      filteredBikes.sort((bike1, bike2) => myLocation
+          .calculateDistanceInDouble(bike1.lastRegisteredLocation.latitude,
+              bike1.lastRegisteredLocation.longitude)
+          .compareTo(myLocation.calculateDistanceInDouble(
+              bike2.lastRegisteredLocation.latitude,
+              bike2.lastRegisteredLocation.longitude)));
       content = Expanded(
         child: SizedBox(
           height: size.height * 0.6,

@@ -5,6 +5,7 @@ import 'package:BikeCrossing/widgets/bike_favorite_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:transparent_image/transparent_image.dart';
 import '../models/bike_model.dart';
 
 class BikeDetail extends ConsumerWidget {
@@ -114,9 +115,15 @@ class _BasicInfo extends StatelessWidget {
               children: [
                 const Icon(Icons.location_on),
                 const SizedBox(width: 2),
-                Text(
-                  bike.lastRegisteredLocation.address,
-                  style: Theme.of(context).textTheme.titleMedium,
+                Container(
+                  width: 220,
+                  child: Text(
+                    bike.lastRegisteredLocation.address,
+                    overflow: TextOverflow.ellipsis,
+                    softWrap: false,
+                    maxLines: 1,
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
                 ),
               ],
             ),

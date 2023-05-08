@@ -33,28 +33,24 @@ class FavoriteScreen extends ConsumerWidget {
             final bike = favoriteBikes[index];
             return Container(
               margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
+              width: 120,
+              height: 120,
               decoration: BoxDecoration(
-                border: Border.all(
-                  color: Theme.of(context).colorScheme.secondaryContainer,
+                  border: Border.all(
+                    color: Theme.of(context).colorScheme.secondaryContainer,
+                  ),
+                  borderRadius: BorderRadius.circular(10),
+                image: DecorationImage(
+                  image: NetworkImage(bike.images[0]),
+                  fit: BoxFit.cover,
+                  colorFilter: ColorFilter.mode(
+                    Colors.black.withOpacity(0.2),
+                    BlendMode.colorBurn,),
                 ),
-                borderRadius: BorderRadius.circular(10),
               ),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    width: 120,
-                    height: 120,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          bottomLeft: Radius.circular(10)),
-                      image: DecorationImage(
-                        image: NetworkImage(bike.images[0]),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.all(10),
@@ -63,12 +59,19 @@ class FavoriteScreen extends ConsumerWidget {
                         children: [
                           Text(
                             bike.name,
-                            style: Theme.of(context).textTheme.titleLarge,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                              color: Colors.white,
+                            ),
                           ),
                           Text(
                             bike.rentalPointsPerDay.toString() + ' Points/Day',
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                              color: Colors.white,
+                            ),
                           ),
                           const SizedBox(height: 10),
                           _BikeTypes(types:bike.types),
@@ -107,7 +110,7 @@ class _BikeTypes extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         children: [
           ...types.map((bikeType) =>
-              CustomChip(label: bikeType.capitalName())),
+              CustomChip(label: bikeType.capitalName(),isSelected: true,)),
         ],
       ),
     );
