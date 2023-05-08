@@ -45,6 +45,9 @@ app.*.map.json
 
 # Hidden api key
 android/app/src/main/res/values/secrets.xml
+ios/Runner/Secrets.plist
+
 
 *.env
+
 
