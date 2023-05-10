@@ -34,7 +34,7 @@ class FavoriteScreen extends ConsumerWidget {
             return Container(
               margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
               width: 120,
-              height: 120,
+              height: 130,
               decoration: BoxDecoration(
                   border: Border.all(
                     color: Theme.of(context).colorScheme.secondaryContainer,

@@ -29,7 +29,7 @@ class BikeDetail extends ConsumerWidget {
                   _BasicInfo(bike: bike),
                   Divider(),
                   Container(
-                    height: size.width * 0.74,
+                    height: size.height * 0.74,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: Colors.grey.shade200,
@@ -37,20 +37,16 @@ class BikeDetail extends ConsumerWidget {
                     child: Stack(
                       //mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Center(
-                          child: Center(
-                            child: SingleChildScrollView(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Placeholder(),
-                                ],
-                              ),
-                            ),
+                        SingleChildScrollView(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Placeholder(),
+                            ],
                           ),
                         ),
                         Positioned(
-                          bottom: 4,
+                          bottom: 40,
                           right: 20,
                           left: 20,
                           child: ElevatedButton(
@@ -60,9 +56,9 @@ class BikeDetail extends ConsumerWidget {
                                     .getCurrentLocation();
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (ctx) => NavigationScreen(
-                                          startLocation: currentLocation,
-                                          bike: bike,
-                                        )));
+                                      startLocation: currentLocation,
+                                      bike: bike,
+                                    )));
                               },
                               child: Text(bike.rentalPointsPerDay.toString() +
                                   ' Point / Day')),
@@ -116,7 +112,7 @@ class _BasicInfo extends StatelessWidget {
                 const Icon(Icons.location_on),
                 const SizedBox(width: 2),
                 Container(
-                  width: 220,
+                  width: 200,
                   child: Text(
                     bike.lastRegisteredLocation.address,
                     overflow: TextOverflow.ellipsis,

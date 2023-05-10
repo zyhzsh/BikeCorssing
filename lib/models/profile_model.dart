@@ -4,6 +4,7 @@ class UserProfileModel {
   final String avatarUrl;
   final int remainingPoints;
   final List<String> favoriteBikes;
+
   const UserProfileModel({
     required this.id,
     required this.userName,
