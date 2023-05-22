@@ -14,8 +14,6 @@ class BikesScreen extends StatelessWidget {
       child: Column(
         children: const [
           SizedBox(height: 10),
-          _SearchBar(),
-          SizedBox(height: 10),
           BikeTypeFilters(),
           SizedBox(height: 10),
           BikePreviewGrid(),

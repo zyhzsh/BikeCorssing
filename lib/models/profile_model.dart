@@ -12,21 +12,36 @@ class UserProfileModel {
     required this.remainingPoints,
     required this.favoriteBikes,
   });
+
+  static UserProfileModel defaultUser = const UserProfileModel(
+    id: 'sample-0',
+    userName: 'John Doe',
+    avatarUrl:
+    'https://placebear.com/250/250',
+    remainingPoints: 2250,
+    favoriteBikes: [],
+  );
   static UserProfileModel sampleUser = const UserProfileModel(
     id: 'sample-1',
-    userName: 'John Doe',
+    userName: 'Tommy',
     avatarUrl:
-        'https://images.unsplash.com/photo-1507035895480-2b3156c31fc8',
-    remainingPoints: 1200,
-    favoriteBikes: ['sample-1', 'sample-2'],
-  );
-  static UserProfileModel defaultUser = const UserProfileModel(
-    id: 'sample-1',
-    userName: 'John Doe',
-    avatarUrl:
-    'https://images.unsplash.com/photo-1507035895480-2b3156c31fc8',
+    'https://i.pravatar.cc/250?u=mail@ashallendesign.co.uk',
     remainingPoints: 2250,
-    favoriteBikes: ['sample-1', 'sample-2'],
+    favoriteBikes: [],
+  );
+  static UserProfileModel sampleUser2 = const UserProfileModel(
+    id: 'sample-2',
+    userName: 'Kimmy',
+    avatarUrl:
+    'https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250',
+    remainingPoints: 100,
+    favoriteBikes: [],
   );
 
+
+  static List<UserProfileModel> sampleUsers = [
+    defaultUser,
+    sampleUser,
+    sampleUser2,
+  ];
 }
