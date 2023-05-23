@@ -22,34 +22,34 @@ class BikesScreen extends StatelessWidget {
     );
   }
 }
-
-
-class _SearchBar extends StatelessWidget {
-  const _SearchBar({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-        onChanged: (value) {},
-        decoration: InputDecoration(
-          hintText: 'Search bike',
-          hintStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
-            fontSize: 16,
-            color: Theme.of(context).colorScheme.onBackground,
-          ),
-          prefixIcon: Icon(
-            Icons.search,
-            color: Theme.of(context).colorScheme.onBackground,
-          ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide.none,
-          ),
-          filled: true,
-          fillColor: Theme.of(context)
-              .colorScheme
-              .secondaryContainer
-              .withOpacity(0.2),
-        ));
-  }
-}
+//
+//
+// class _SearchBar extends StatelessWidget {
+//   const _SearchBar({Key? key}) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return TextFormField(
+//         onChanged: (value) {},
+//         decoration: InputDecoration(
+//           hintText: 'Search bike',
+//           hintStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
+//             fontSize: 16,
+//             color: Theme.of(context).colorScheme.onBackground,
+//           ),
+//           prefixIcon: Icon(
+//             Icons.search,
+//             color: Theme.of(context).colorScheme.onBackground,
+//           ),
+//           border: OutlineInputBorder(
+//             borderRadius: BorderRadius.circular(10),
+//             borderSide: BorderSide.none,
+//           ),
+//           filled: true,
+//           fillColor: Theme.of(context)
+//               .colorScheme
+//               .secondaryContainer
+//               .withOpacity(0.2),
+//         ));
+//   }
+// }

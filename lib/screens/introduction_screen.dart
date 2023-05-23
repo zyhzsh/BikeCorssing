@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -38,38 +39,69 @@ class IntroductionScreen extends StatelessWidget {
                       ),
                 ),
                 const Spacer(),
-                ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.transparent,
-                      padding: EdgeInsets.zero,
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(14.0),
-                      ),
-                    ),
-                    onPressed: onCompleteOnBoarding,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Icon(
-                          Icons.arrow_circle_right_outlined,
-                          size: 50,
-                          color: Colors.white,
-                        ),
-                        Text(
-                          'Explore Now',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineSmall!
-                              .copyWith(
-                                color: Colors.white,
-                              ),
-                        ),
-                      ],
-                    )),
+                _ExploreButton(onCompleteOnBoarding: onCompleteOnBoarding),
               ]),
         ),
       ),
     );
   }
 }
+
+class _ExploreButton extends StatefulWidget {
+  const _ExploreButton({
+    super.key,
+    required this.onCompleteOnBoarding,
+  });
+
+  final void Function() onCompleteOnBoarding;
+
+  @override
+  State<_ExploreButton> createState() => _ExploreButtonState();
+}
+
+class _ExploreButtonState extends State<_ExploreButton> {
+  @override
+  Widget build(BuildContext context) {
+    final colorizeColors = [
+      Colors.white,
+      Theme.of(context).colorScheme.primary,
+    ];
+
+    return ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.transparent,
+          padding: EdgeInsets.zero,
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(14.0),
+          ),
+        ),
+        onPressed: widget.onCompleteOnBoarding,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(
+              Icons.arrow_circle_right_outlined,
+              size: 50,
+              color: Colors.white,
+            ),
+            AnimatedTextKit(
+              animatedTexts: [
+                ColorizeAnimatedText(
+                  'Explore Now',
+                  textStyle: Theme.of(context)
+                      .textTheme
+                      .headlineLarge!
+                      .copyWith(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                  colors: colorizeColors,
+                ),
+              ],
+              repeatForever: true,
+              onTap: widget.onCompleteOnBoarding,
+            ),
+          ],
+        ));
+  }
+}
+

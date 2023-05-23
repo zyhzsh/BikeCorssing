@@ -1,22 +1,25 @@
 import 'package:BikeCrossing/models/bike_model.dart';
+import 'package:BikeCrossing/providers/bikes_provider.dart';
 import 'package:BikeCrossing/screens/rent_contract_screen.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
 
-class QrScannerScreen extends StatefulWidget {
+class QrScannerScreen extends ConsumerStatefulWidget {
   const QrScannerScreen({super.key, required this.bike});
 
   final BikeModel bike;
 
   @override
-  State<QrScannerScreen> createState() => _QrScannerScreenState();
+  ConsumerState<QrScannerScreen> createState() => _QrScannerScreenState();
 }
 
-class _QrScannerScreenState extends State<QrScannerScreen> {
-  void _creatingRentalContract(String bikeId) {
+class _QrScannerScreenState extends ConsumerState<QrScannerScreen> {
+  void _creatingRentalContract() {
+    Navigator.of(context).pop();
     Navigator.of(context).push(
       MaterialPageRoute(
           builder: (context) => RentalContractScreen(
@@ -56,6 +59,7 @@ class _QrScannerScreenState extends State<QrScannerScreen> {
                 ),
               ),
             ),
+            ElevatedButton(onPressed: _creatingRentalContract, child: Text('test')),
             Container(
               width: 500,
               height: 500,
@@ -70,7 +74,7 @@ class _QrScannerScreenState extends State<QrScannerScreen> {
                   final List<Barcode> barcodes = capture.barcodes;
                   String bikeId = barcodes.last.rawValue.toString();
                   Navigator.of(context).pop();
-                  _creatingRentalContract(bikeId);
+                  _creatingRentalContract();
                 },
               ),
             ),

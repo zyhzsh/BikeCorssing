@@ -473,7 +473,7 @@ class _BikeHistoryList extends ConsumerWidget {
                     ),
                     hr.imgUrls.length > 0
                         ? Container(
-                            height: currentHeight * 0.15,
+                            height: currentHeight * 0.3,
                             padding: EdgeInsets.symmetric(
                                 horizontal: currentWidth * 0.02,
                                 vertical: currentHeight * 0.01),
@@ -702,14 +702,14 @@ class _BikeNameCard extends StatelessWidget {
                         bike.createdAt!.month.toString() +
                         '-' +
                         bike.createdAt!.day.toString(),
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                           color: Colors.white,
                           fontWeight: FontWeight.w600,
                         ),
                   ),
                   Text(
                     'From: ' + bike.firstRegisteredLocation.address,
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                           color: Colors.white,
                           fontWeight: FontWeight.w600,
                         ),
@@ -724,7 +724,7 @@ class _BikeNameCard extends StatelessWidget {
                         return Text(
                           'By: ' + user.userName,
                           style:
-                              Theme.of(context).textTheme.bodyLarge!.copyWith(
+                              Theme.of(context).textTheme.bodyMedium!.copyWith(
                                     color: Colors.white,
                                     fontWeight: FontWeight.w600,
                                   ),

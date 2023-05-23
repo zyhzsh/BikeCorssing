@@ -1,8 +1,10 @@
 import 'package:BikeCrossing/models/bike_model.dart';
+import 'package:BikeCrossing/models/rental_contract_model.dart';
 import 'package:BikeCrossing/screens/contract_approved_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:supabase_auth_ui/supabase_auth_ui.dart';
 
 import '../providers/profile_provider.dart';
 
@@ -38,9 +40,10 @@ class _RentalContractScreenState extends ConsumerState<RentalContractScreen> {
 
   void _createContractPreview() {
     final now = DateTime.now();
-    int differenceInDays = 0;
+    int differenceInDays;
     Duration difference = _selectedDate!.difference(now);
     differenceInDays = difference.inDays;
+    differenceInDays++;
     int estimatedCost = differenceInDays * widget.bike.rentalPointsPerDay;
     setState(() {
       _rentalDays = differenceInDays;
@@ -49,7 +52,14 @@ class _RentalContractScreenState extends ConsumerState<RentalContractScreen> {
   }
 
   void _confirmContract() {
-    //Navigator.of(context).pop();
+    User user = Supabase.instance.client.auth.currentUser!;
+    RentalContractModel contract = RentalContractModel(
+        bikeId: widget.bike.id,
+        userId: user.id,
+        returnDate: _selectedDate!,
+        costPointPerDay: widget.bike.rentalPointsPerDay);
+    ref.read(userProfileProvider.notifier).assignRentalContract(contract);
+    Navigator.of(context).pop();
     Navigator.of(context).push(
       MaterialPageRoute(builder: (context) => ContractApprovedScreen()),
     );
@@ -57,8 +67,7 @@ class _RentalContractScreenState extends ConsumerState<RentalContractScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final _userCurrentRemainingPoints =
-        ref.read(userProfileProvider).remainingPoints;
+    final user = ref.watch(userProfileProvider);
 
     return Scaffold(
         body: SafeArea(
@@ -156,7 +165,11 @@ class _RentalContractScreenState extends ConsumerState<RentalContractScreen> {
                     Text(
                       _selectedDate == null
                           ? 'No Date Chosen'
-                          : formatter.format(_selectedDate!),
+                          : _selectedDate!.year.toString() +
+                              '-' +
+                              _selectedDate!.month.toString() +
+                              '-' +
+                              _selectedDate!.day.toString(),
                     ),
                   ],
                 ),
@@ -185,7 +198,7 @@ class _RentalContractScreenState extends ConsumerState<RentalContractScreen> {
                                     ),
                               ),
                               Text(
-                                '1200',
+                                '${user.remainingPoints}',
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyLarge!
@@ -220,7 +233,7 @@ class _RentalContractScreenState extends ConsumerState<RentalContractScreen> {
                           SizedBox(
                             height: 20,
                           ),
-                          _userCurrentRemainingPoints >= _estimatedCost
+                          user.remainingPoints >= _estimatedCost
                               ? ElevatedButton.icon(
                                   style: ElevatedButton.styleFrom(
                                     foregroundColor:

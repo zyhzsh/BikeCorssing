@@ -57,21 +57,28 @@ class _BikePreviewGridState extends ConsumerState<BikePreviewGrid> {
       content = Expanded(
         child: SizedBox(
           height: size.height * 0.6,
-          child: GridView.builder(
-              shrinkWrap: true,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 1,
-                mainAxisSpacing: 10.0,
-                crossAxisSpacing: 10.0,
-              ),
-              itemCount: filteredBikes.length,
-              itemBuilder: ((context, index) {
-                return BikePreviewGridCard(
-                  bike: filteredBikes[index],
-                  width: size.width * 0.425,
-                );
-              })),
+          child: RefreshIndicator(
+            edgeOffset: 80,
+            displacement: 200,
+            onRefresh: ()async{
+              await Future.delayed(Duration(seconds: 1));
+            },
+            child: GridView.builder(
+                shrinkWrap: true,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 1,
+                  mainAxisSpacing: 10.0,
+                  crossAxisSpacing: 10.0,
+                ),
+                itemCount: filteredBikes.length,
+                itemBuilder: ((context, index) {
+                  return BikePreviewGridCard(
+                    bike: filteredBikes[index],
+                    width: size.width * 0.425,
+                  );
+                })),
+          ),
         ),
       );
     }

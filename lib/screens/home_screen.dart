@@ -1,5 +1,7 @@
+import 'package:BikeCrossing/models/rental_contract_model.dart';
 import 'package:BikeCrossing/providers/location_provider.dart';
 import 'package:BikeCrossing/providers/profile_provider.dart';
+import 'package:BikeCrossing/screens/active_contract_screen.dart';
 import 'package:BikeCrossing/screens/bikes_screen.dart';
 import 'package:BikeCrossing/screens/favorite_screen.dart';
 import 'package:BikeCrossing/screens/journey_screen.dart';
@@ -26,7 +28,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     ref.read(userLocationProvider.notifier).getCurrentLocation();
   }
 
-
   @override
   void initState() {
     super.initState();
@@ -41,7 +42,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       appBar: AppBar(
         centerTitle: false,
         title: Padding(
-            padding: const EdgeInsets.only(left: 10, top: 10),
+            padding: const EdgeInsets.only(left: 10, top: 20, bottom: 20),
             child: Row(
               children: [
                 CircleAvatar(
@@ -68,9 +69,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             )),
       ),
       body: [
-        BikesScreen(),
-        JourneyScreen(),
-        FavoriteScreen(),
+        currentUser.currentContract?.status == ContractStatus.active
+            ? const ActiveContractScreen()
+            : const BikesScreen(),
+        const JourneyScreen(),
+        const FavoriteScreen(),
       ][selectedScreenIndex],
       bottomNavigationBar: CustomBottomNavBar(
         selectedIndex: selectedScreenIndex,
