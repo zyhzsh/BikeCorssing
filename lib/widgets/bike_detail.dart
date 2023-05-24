@@ -285,6 +285,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:transparent_image/transparent_image.dart';
 import '../models/bike_model.dart';
+import 'bike_event_cards.dart';
+import 'bike_history_list.dart';
 
 class BikeDetail extends ConsumerWidget {
   const BikeDetail({Key? key, required this.bike}) : super(key: key);
@@ -314,7 +316,7 @@ class BikeDetail extends ConsumerWidget {
           _BikeNameCard(size: size, bike: bike, bikeDonor: bikeDonor),
           // _EventsCards
           SizedBox(height: size.height * 0.012),
-          _EventCards(
+          EventCards(
               storyShareTimes: storyShareTimes,
               bike: bike,
               exchangeTimes: exchangeTimes,
@@ -327,7 +329,7 @@ class BikeDetail extends ConsumerWidget {
               SizedBox(
                 width: size.width,
                 height: size.height * 0.54,
-                child: _BikeHistoryList(
+                child: BikeHistoryList(
                   historyRecords: bike.historyRecords,
                 ),
               ),
@@ -367,271 +369,7 @@ class BikeDetail extends ConsumerWidget {
   }
 }
 
-class _BikeHistoryList extends ConsumerWidget {
-  const _BikeHistoryList({
-    super.key,
-    required this.historyRecords,
-  });
 
-  final List<HistoryRecordModel> historyRecords;
-
-  Map<String, List<HistoryRecordModel>> getHistoryChunk() {
-    Map<String, List<HistoryRecordModel>> historyChunk = {};
-    List<String> userIds = [];
-    List<HistoryRecordModel> tempHrs;
-    String currentUserId = '';
-    historyRecords.forEach((hr) {
-      if (hr.userId != currentUserId) {
-        userIds.add(hr.userId);
-        currentUserId = hr.userId;
-      }
-    });
-    for (String userId in userIds) {
-      tempHrs = [];
-      for (HistoryRecordModel hr in historyRecords) {
-        if (hr.userId == userId) {
-          tempHrs.add(hr);
-        }
-        historyChunk[userId] = tempHrs;
-      }
-    }
-    return historyChunk;
-  }
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    double currentWidth = MediaQuery.of(context).size.width;
-    double currentHeight = MediaQuery.of(context).size.height;
-
-    return SingleChildScrollView(
-        child: Column(
-      children: [
-        ...getHistoryChunk().keys.map((userId) {
-          final getUser =
-              ref.read(userProfileProvider.notifier).getProfileById(userId);
-          return Column(children: [
-            Row(
-              children: [
-                FutureBuilder(
-                    future: getUser,
-                    builder: (ctx, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.done) {
-                        UserProfileModel user =
-                            snapshot.data as UserProfileModel;
-                        return Row(
-                          children: [
-                            SizedBox(width: currentWidth * 0.02),
-                            CircleAvatar(
-                              backgroundImage: NetworkImage(user.avatarUrl),
-                            ),
-                            SizedBox(width: currentWidth * 0.02),
-                            Text(user.userName,
-                                style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.bold)),
-                          ],
-                        );
-                      }
-                      return Text('...');
-                    }),
-              ],
-            ),
-            ...getHistoryChunk()[userId]!.map((hr) {
-              return Card(
-                elevation: 7,
-                margin: EdgeInsets.symmetric(
-                    horizontal: currentWidth * 0.02,
-                    vertical: currentHeight * 0.01),
-                clipBehavior: Clip.antiAlias,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ListTile(
-                      // trailing: Text(hr.location.address),
-                      title: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          hr.recordType.getIcon(),
-                          SizedBox(width: currentWidth * 0.02),
-                          Text(hr.createdAt.year.toString() +
-                              '-' +
-                              hr.createdAt.month.toString() +
-                              '-' +
-                              hr.createdAt.day.toString()),
-                        ],
-                      ),
-                      subtitle: Text(hr.content,style: Theme.of(context).textTheme.bodyLarge,),
-                    ),
-                    Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: currentWidth * 0.03),
-                      child: Row(
-                        children: [
-                          Icon(Icons.location_on_outlined),
-                          Text(hr.location.address,style: Theme.of(context).textTheme.labelSmall!.copyWith(),),
-                        ],
-                      ),
-                    ),
-                    hr.imgUrls.length > 0
-                        ? Container(
-                            height: currentHeight * 0.3,
-                            padding: EdgeInsets.symmetric(
-                                horizontal: currentWidth * 0.02,
-                                vertical: currentHeight * 0.01),
-                            child: ListView.separated(
-                              separatorBuilder: (ctx, index) =>
-                                  SizedBox(width: currentWidth * 0.02),
-                              scrollDirection: Axis.horizontal,
-                              itemCount: hr.imgUrls.length,
-                              itemBuilder: (ctx, index) {
-                                double width = hr.imgUrls.length == 1
-                                    ? currentWidth
-                                    : hr.imgUrls.length == 2
-                                        ? currentWidth * 0.5
-                                        : currentWidth * 0.3;
-                                return Container(
-                                  width: width,
-                                    child: FadeInImage(
-                                    placeholder: MemoryImage(kTransparentImage),
-                                    image: NetworkImage(hr.imgUrls[index]),
-                                    fit: BoxFit.cover,
-                                  ),
-                                );
-                              },
-                            ),
-                          )
-                        : SizedBox(height: currentHeight * 0.01),
-                  ],
-                ),
-              );
-            }).toList(),
-          ]);
-        }),
-        SizedBox(height: currentHeight * 0.1),
-      ],
-    ));
-  }
-}
-
-class _EventCards extends StatelessWidget {
-  const _EventCards({
-    super.key,
-    required this.storyShareTimes,
-    required this.bike,
-    required this.exchangeTimes,
-    required this.selfMaintenanceTimes,
-    required this.repairMaintenanceTimes,
-  });
-
-  final String storyShareTimes;
-  final BikeModel bike;
-  final String exchangeTimes;
-  final String selfMaintenanceTimes;
-  final String repairMaintenanceTimes;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-      InkWell(
-        onTap: () => showDialog<String>(
-          context: context,
-          builder: (BuildContext context) => AlertDialog(
-            title: const Text('Story Sharing'),
-            content: Text(
-              'Past owners shared ${storyShareTimes} fond memories of ${bike.name}.',
-              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
-            ),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () => Navigator.pop(context, 'OK'),
-                child: const Text('OK'),
-              ),
-            ],
-          ),
-        ),
-        child: Row(
-          children: [Icon(Icons.image), Text(" X " + storyShareTimes)],
-        ),
-      ),
-      InkWell(
-        onTap: () => showDialog<String>(
-          context: context,
-          builder: (BuildContext context) => AlertDialog(
-            title: const Text('History Owner'),
-            content: Text(
-              '${bike.name} has been used by ${exchangeTimes} people.',
-              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
-            ),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () => Navigator.pop(context, 'OK'),
-                child: const Text('OK'),
-              ),
-            ],
-          ),
-        ),
-        child: Row(
-          children: [
-            Icon(Icons.transfer_within_a_station),
-            Text(' X ' + exchangeTimes)
-          ],
-        ),
-      ),
-      InkWell(
-        onTap: () => showDialog<String>(
-          context: context,
-          builder: (BuildContext context) => AlertDialog(
-            title: const Text('Meticulously maintained'),
-            content: Text(
-              '${bike.name} has been maintained and customized ${selfMaintenanceTimes} times by past users.',
-              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
-            ),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () => Navigator.pop(context, 'OK'),
-                child: const Text('OK'),
-              ),
-            ],
-          ),
-        ),
-        child: Row(
-          children: [
-            Icon(Icons.auto_fix_high),
-            Text(' X ' + selfMaintenanceTimes)
-          ],
-        ),
-      ),
-      InkWell(
-        onTap: () => showDialog<String>(
-          context: context,
-          builder: (BuildContext context) => AlertDialog(
-            title: const Text('Customization and Repair'),
-            content: Text(
-              'Previous owners have repaired and customized ${bike.name} ${repairMaintenanceTimes} times.',
-              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
-            ),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () => Navigator.pop(context, 'OK'),
-                child: const Text('OK'),
-              ),
-            ],
-          ),
-        ),
-        child: Row(
-          children: [Icon(Icons.build), Text(' X ' + repairMaintenanceTimes)],
-        ),
-      ),
-    ]);
-  }
-}
 
 class _BikeNameCard extends StatelessWidget {
   const _BikeNameCard({

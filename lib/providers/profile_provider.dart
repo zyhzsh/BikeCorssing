@@ -45,6 +45,8 @@ class UserProfileNotifier extends StateNotifier<UserProfileModel> {
 
   Future<UserProfileModel> getProfileById(String donorId) async {
     await Future.delayed(const Duration(milliseconds: 200));
+    //Add current user to the local fake data list
+    UserProfileModel.sampleUsers.add(state);
     final profile = UserProfileModel.sampleUsers
         .firstWhere((profile) => profile.id == donorId);
     return profile;
@@ -57,28 +59,29 @@ class UserProfileNotifier extends StateNotifier<UserProfileModel> {
     contract.updateContractStatus(ContractStatus.approved);
     upDatedRentalContracts.add(contract);
     final newState = UserProfileModel(
-      id: state.id,
-      userName: state.userName,
-      avatarUrl: state.avatarUrl,
-      remainingPoints: state.remainingPoints,
-      favoriteBikes: state.favoriteBikes,
-      rentalContracts: upDatedRentalContracts,
-      currentContract: contract
-    );
+        id: state.id,
+        userName: state.userName,
+        avatarUrl: state.avatarUrl,
+        remainingPoints: state.remainingPoints,
+        favoriteBikes: state.favoriteBikes,
+        rentalContracts: upDatedRentalContracts,
+        currentContract: contract);
     state = newState;
   }
 
-  void terminatedRentalContract()async{
+  void terminatedRentalContract() async {
     final upDatedCurrentContract = state.currentContract;
-    if(upDatedCurrentContract!=null){
+    if (upDatedCurrentContract != null) {
       //TODO API call to Terminated RentalContract;
       upDatedCurrentContract.updateContractStatus(ContractStatus.terminated);
-      final upDatedRentalContracts = [...state.rentalContracts.map((contract) {
-        if(contract.id == contract.id){
-          return upDatedCurrentContract;
-        }
-        return contract;
-      })];
+      final upDatedRentalContracts = [
+        ...state.rentalContracts.map((contract) {
+          if (contract.id == contract.id) {
+            return upDatedCurrentContract;
+          }
+          return contract;
+        })
+      ];
       final newState = UserProfileModel(
         id: state.id,
         userName: state.userName,
@@ -92,16 +95,18 @@ class UserProfileNotifier extends StateNotifier<UserProfileModel> {
     }
   }
 
-  void activeRentalContract()async{
+  void activeRentalContract() async {
     //TODO API call to Active RentalContract;
     final upDatedCurrentContract = state.currentContract;
     upDatedCurrentContract!.updateContractStatus(ContractStatus.active);
-    final upDatedRentalContracts = [...state.rentalContracts.map((contract) {
-      if(contract.id == contract.id){
-        return upDatedCurrentContract;
-      }
-      return contract;
-    })];
+    final upDatedRentalContracts = [
+      ...state.rentalContracts.map((contract) {
+        if (contract.id == contract.id) {
+          return upDatedCurrentContract;
+        }
+        return contract;
+      })
+    ];
     final newState = UserProfileModel(
       id: state.id,
       userName: state.userName,
@@ -111,7 +116,7 @@ class UserProfileNotifier extends StateNotifier<UserProfileModel> {
       rentalContracts: upDatedRentalContracts,
       currentContract: upDatedCurrentContract!,
     );
-     state = newState;
+    state = newState;
   }
 }
 

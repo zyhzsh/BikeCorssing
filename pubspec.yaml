@@ -27,6 +27,7 @@ dependencies:
   transparent_image: ^2.0.1
   sizer: ^2.0.15
   uuid: ^3.0.7
+  qr_flutter: ^4.0.0
 
 dev_dependencies:
   flutter_test:

@@ -176,7 +176,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Theme.of(context).colorScheme.secondary,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         onPressed: _scanQr,
         child: const Icon(Icons.qr_code_scanner, color: Colors.white),
       ),

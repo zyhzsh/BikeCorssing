@@ -1,4 +1,8 @@
 import 'package:BikeCrossing/models/location_model.dart';
+import 'package:BikeCrossing/models/rental_contract_model.dart';
+import 'package:uuid/uuid.dart';
+
+var uuid = Uuid();
 
 class HistoryRecordModel {
   final String id;
@@ -10,20 +14,18 @@ class HistoryRecordModel {
   final DateTime createdAt;
   final LocationModel location;
 
-  const HistoryRecordModel( {
+  HistoryRecordModel({
     required this.location,
-    required this.id,
+    String? id,
     required this.bikeId,
     required this.userId,
     required this.recordType,
     required this.imgUrls,
     required this.content,
-    required this.createdAt,
-  });
-
-
+    DateTime? createdAt,
+  })  : createdAt = createdAt ?? DateTime.now(),
+        id = id ?? uuid.v4();
 }
-
 
 enum TypeOfRecord {
   donate,

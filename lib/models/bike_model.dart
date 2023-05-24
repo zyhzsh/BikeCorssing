@@ -175,6 +175,11 @@ class BikeModel {
         startMillis + (randomDays * 86400000));
   }
 
+  void addHistoryRecord(HistoryRecordModel record) {
+    historyRecords.insert(0, record);
+  }
+
+
   String get formattedDate {
     return formatter.format(createdAt!);
   }

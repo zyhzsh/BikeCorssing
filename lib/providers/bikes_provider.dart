@@ -1,4 +1,5 @@
 import 'package:BikeCrossing/models/bike_model.dart';
+import 'package:BikeCrossing/models/history_record_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class BikesNotifier extends StateNotifier<List<BikeModel>> {
@@ -33,6 +34,17 @@ class BikesNotifier extends StateNotifier<List<BikeModel>> {
       bikes.add(bike);
     }
     return bikes;
+  }
+
+  Future<void> addBikeHistoryRecord(HistoryRecordModel record) async {
+    state = [
+      ...state.map((bike) {
+        if (bike.id == record.bikeId) {
+          bike.addHistoryRecord(record);
+        }
+        return bike;
+      })
+    ];
   }
 }
 
