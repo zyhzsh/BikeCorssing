@@ -12,7 +12,7 @@ class MiniQuestModel {
   final TypeOfRecord typeOfRecord;
   final int earningPoints;
   final String subtitle;
-  final String bikeId;
+   String bikeId;
 
   MiniQuestModel({
     String? id,
@@ -51,29 +51,44 @@ class MiniQuestModel {
   }
 
 
-  static List<MiniQuestModel> getSampleMiniQuests(String bikeId) {
-    return [
+  static List<MiniQuestModel> sample = [
       MiniQuestModel(
         typeOfRecord: TypeOfRecord.repairMaintenance,
         completionStatus: false,
         earningPoints: 200,
         subtitle: 'Keep your ride smooth - maintain your bike!',
-        bikeId: bikeId,
+        bikeId: 'bikeId',
       ),
       MiniQuestModel(
         typeOfRecord: TypeOfRecord.selfMaintenance,
         completionStatus: false,
         earningPoints: 100,
         subtitle: 'A little maintenance goes a long way!',
-        bikeId: bikeId,
+        bikeId: 'bikeId',
       ),
       MiniQuestModel(
         typeOfRecord: TypeOfRecord.storyShare,
         completionStatus: false,
         earningPoints: 100,
         subtitle: 'Share your bicycle journey!',
-        bikeId: bikeId,
+        bikeId: 'bikeId',
       ),
     ];
+
+
+  static List<MiniQuestModel> getSampleMiniQuests(String bikeId) {
+    return sample.map((e){
+      e.bikeId=bikeId;
+      return e;
+    }).toList();
+  }
+  static List<MiniQuestModel> modifyMiniQuests(String bikeId, TypeOfRecord typeOfRecord) {
+    return sample.map((e){
+      e.bikeId=bikeId;
+      if(e.typeOfRecord==typeOfRecord){
+        e.completionStatus=!e.completionStatus;
+      }
+      return e;
+    }).toList();
   }
 }

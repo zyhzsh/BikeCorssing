@@ -35,7 +35,9 @@ class _MiniQuestListState extends ConsumerState<MiniQuestList> {
 
   void getMiniQuests() async {
     final bikeId = ref.read(userProfileProvider).currentContract!.bikeId;
-    final quests = MiniQuestModel.getSampleMiniQuests(bikeId);
+    ref.read(miniQuestProvider.notifier).getMiniQuests(bikeId);
+    final quests = ref.read(miniQuestProvider.notifier).state.where((q) => q.completionStatus == false).toList();
+    
     setState(() {
       miniQuests = quests.where((element) {
         expansionStatus.add(false);

@@ -1,4 +1,4 @@
-import 'dart:io' show Platform;
+import 'dart:io' show File, Platform;
 import 'dart:async';
 import 'package:BikeCrossing/screens/qrscanner_screen.dart';
 import 'package:flutter/rendering.dart';
@@ -8,12 +8,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
 import '../models/bike_model.dart';
+import '../providers/profile_provider.dart';
 
-class NavigationScreen extends StatefulWidget {
+class NavigationScreen extends ConsumerStatefulWidget {
   const NavigationScreen(
       {Key? key, required this.startLocation, required this.bike})
       : super(key: key);
@@ -22,10 +24,10 @@ class NavigationScreen extends StatefulWidget {
   final BikeModel bike;
 
   @override
-  State<NavigationScreen> createState() => _NavigationScreenState();
+  ConsumerState<NavigationScreen> createState() => _NavigationScreenState();
 }
 
-class _NavigationScreenState extends State<NavigationScreen> {
+class _NavigationScreenState extends ConsumerState<NavigationScreen> {
   final Completer<GoogleMapController> _controller = Completer();
 
   List<LatLng> polylineCoordinates = [];
@@ -62,24 +64,28 @@ class _NavigationScreenState extends State<NavigationScreen> {
         });
       },
     );
-    BitmapDescriptor.fromAssetImage(const ImageConfiguration(),
-            "assets/images/location_marker_current.png")
-        .then(
-      (icon) {
-        setState(() {
-          currentMarker = icon;
-        });
-      },
-    );
-    // Uint8List destinationMarkerByte =
-    //     (await NetworkAssetBundle(Uri.parse(widget.bike.images[0]))
-    //             .load(widget.bike.images[0]))
-    //         .buffer
-    //         .asUint8List();
-    //
-    // setState(() {
-    //   destinationMarker = BitmapDescriptor.fromBytes(destinationMarkerByte);
-    // });
+
+
+
+    // BitmapDescriptor.fromAssetImage(const ImageConfiguration(),
+    //         "assets/images/location_marker_current.png")
+    //     .then(
+    //   (icon) {
+    //     setState(() {
+    //       currentMarker = icon;
+    //     });
+    //   },
+    // );
+   final avatarUrl = ref.read(userProfileProvider.notifier).state.avatarUrl;
+    Uint8List destinationMarkerByte =
+        (await NetworkAssetBundle(Uri.parse(avatarUrl))
+                .load(avatarUrl))
+            .buffer
+            .asUint8List();
+
+    setState(() {
+      currentMarker = BitmapDescriptor.fromBytes(destinationMarkerByte);
+    });
   }
 
   void initCameraPosition()async{
@@ -99,20 +105,19 @@ class _NavigationScreenState extends State<NavigationScreen> {
     );
   }
 
-
   void getCurrentLocation() async {
     GoogleMapController googleMapController = await _controller.future;
     locationSubscription =
         location.onLocationChanged.listen((LocationData currentLocation) {
-      googleMapController.animateCamera(
-        CameraUpdate.newCameraPosition(
-          CameraPosition(
-            target:
-                LatLng(currentLocation.latitude!, currentLocation.longitude!),
-            zoom: 13.5,
-          ),
-        ),
-      );
+      // googleMapController.animateCamera(
+      //   CameraUpdate.newCameraPosition(
+      //     CameraPosition(
+      //       target:
+      //           LatLng(currentLocation.latitude!, currentLocation.longitude!),
+      //       zoom: 13.5,
+      //     ),
+      //   ),
+      // );
       setState(() {
         this.currentLocation = currentLocation;
       });

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 import 'package:BikeCrossing/models/mini_quest_model.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,12 +15,7 @@ class MiniQuestNotifier extends StateNotifier<List<MiniQuestModel>> {
   }
   void finishMiniQuest(MiniQuestModel miniQuest) async {
     await Future.delayed(const Duration(milliseconds: 200));
-    final miniQuests = state.map((quest) {
-      if (quest.id == miniQuest.id) {
-        quest.completionStatus = true;
-      }
-      return quest;
-    }).toList();
+    final miniQuests = MiniQuestModel.modifyMiniQuests(miniQuest.bikeId, miniQuest.typeOfRecord);
     state = miniQuests;
   }
 }
