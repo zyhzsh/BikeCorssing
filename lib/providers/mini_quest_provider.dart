@@ -7,7 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 var uuid = Uuid();
 
 class MiniQuestNotifier extends StateNotifier<List<MiniQuestModel>> {
-  MiniQuestNotifier() : super([]);
+  MiniQuestNotifier() : super(MiniQuestModel.getSampleMiniQuests('bikeId'));
   void getMiniQuests(String bikeId) async {
     await Future.delayed(const Duration(milliseconds: 200));
     final miniQuests = MiniQuestModel.getSampleMiniQuests(bikeId);
