@@ -3,7 +3,7 @@ description: A new Flutter project.
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.0+1
+version: 1.0.0+5
 
 environment:
   sdk: '>=2.19.4 <3.0.0'
@@ -17,6 +17,7 @@ dependencies:
   flutter_riverpod: ^2.3.5
   flutter_svg: ^1.1.6
   intl: ^0.18.1
+  http: ^0.13.5
   supabase_flutter: ^1.8.1
   flutter_dotenv: ^5.0.2
   supabase_auth_ui: ^0.1.0+2
@@ -28,6 +29,9 @@ dependencies:
   sizer: ^2.0.15
   uuid: ^3.0.7
   qr_flutter: ^4.0.0
+  image_picker: ^0.8.7+5
+  auto_size_text: ^3.0.0
+  collection: ^1.17.0
 
 dev_dependencies:
   flutter_test:

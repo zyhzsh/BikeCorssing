@@ -38,46 +38,49 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final currentUser = ref.watch(userProfileProvider);
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: false,
-        title: Padding(
-            padding: const EdgeInsets.only(left: 10, top: 20, bottom: 20),
-            child: Row(
-              children: [
-                CircleAvatar(
-                  radius: 20,
-                  backgroundImage: NetworkImage(currentUser.avatarUrl),
-                ),
-                SizedBox(width: 10),
-                Row(
-                  children: [
-                    Icon(
-                      Icons.star,
-                      color: Theme.of(context).colorScheme.onBackground,
-                    ),
-                    Text(
-                      '${currentUser.remainingPoints} Points',
-                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                            color: Theme.of(context).colorScheme.primary,
-                            fontWeight: FontWeight.bold,
-                          ),
-                    )
-                  ],
-                )
-              ],
-            )),
-      ),
-      body: [
-        currentUser.currentContract?.status == ContractStatus.active
-            ? const ActiveContractScreen()
-            : const BikesScreen(),
-        const JourneyScreen(),
-        const FavoriteScreen(),
-      ][selectedScreenIndex],
-      bottomNavigationBar: CustomBottomNavBar(
-        selectedIndex: selectedScreenIndex,
-        onSelectedScreen: _onSwitchScreen,
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        appBar: AppBar(
+          centerTitle: false,
+          title: Padding(
+              padding: const EdgeInsets.only(left: 10, top: 20, bottom: 20),
+              child: Row(
+                children: [
+                  CircleAvatar(
+                    radius: 20,
+                    backgroundImage: NetworkImage(currentUser.avatarUrl),
+                  ),
+                  SizedBox(width: 10),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.star,
+                        color: Theme.of(context).colorScheme.onBackground,
+                      ),
+                      Text(
+                        '${currentUser.remainingPoints} Points',
+                        style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                              color: Theme.of(context).colorScheme.primary,
+                              fontWeight: FontWeight.bold,
+                            ),
+                      )
+                    ],
+                  )
+                ],
+              )),
+        ),
+        body: [
+          currentUser.currentContract?.status == ContractStatus.active
+              ? const ActiveContractScreen()
+              : const BikesScreen(),
+          const JourneyScreen(),
+          const FavoriteScreen(),
+        ][selectedScreenIndex],
+        bottomNavigationBar: CustomBottomNavBar(
+          selectedIndex: selectedScreenIndex,
+          onSelectedScreen: _onSwitchScreen,
+        ),
       ),
     );
   }

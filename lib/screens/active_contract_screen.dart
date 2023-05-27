@@ -1,7 +1,12 @@
+import 'dart:io';
+
 import 'package:BikeCrossing/models/bike_model.dart';
 import 'package:BikeCrossing/models/location_model.dart';
+import 'package:BikeCrossing/models/mini_quest_model.dart';
 import 'package:BikeCrossing/providers/bikes_provider.dart';
 import 'package:BikeCrossing/utilities/bike_history_extension.dart';
+import 'package:BikeCrossing/widgets/image_input.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -11,6 +16,9 @@ import '../models/history_record_model.dart';
 import '../providers/profile_provider.dart';
 import '../widgets/bike_event_cards.dart';
 import '../widgets/bike_history_list.dart';
+import 'package:collection/collection.dart';
+
+import '../widgets/mini_quest_List.dart';
 
 class ActiveContractScreen extends StatefulWidget {
   const ActiveContractScreen({Key? key}) : super(key: key);
@@ -41,7 +49,7 @@ class _ActiveContractScreenState extends State<ActiveContractScreen>
             controller: tabController,
             children: const [
               _ContractInfo(),
-              _MiniQuest(),
+              MiniQuestList(),
               _BikeStory(),
             ],
           ),
@@ -77,9 +85,8 @@ class _BikeStory extends ConsumerWidget {
                       .getHistoryEventTimes(TypeOfRecord.storyShare)
                       .toString(),
                   bike: bike,
-                  exchangeTimes: bike
-                      .getHistoryEventTimes(TypeOfRecord.returned)
-                      .toString(),
+                  exchangeTimes:
+                      bike.getHistoryEventTimes(TypeOfRecord.rent).toString(),
                   selfMaintenanceTimes: bike
                       .getHistoryEventTimes(TypeOfRecord.selfMaintenance)
                       .toString(),
@@ -108,14 +115,6 @@ class _BikeStory extends ConsumerWidget {
   }
 }
 
-class _MiniQuest extends StatelessWidget {
-  const _MiniQuest({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
-  }
-}
 
 class _Tabs extends StatefulWidget {
   const _Tabs({

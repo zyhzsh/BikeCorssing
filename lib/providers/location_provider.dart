@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:BikeCrossing/models/location_model.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:location/location.dart';
-
+import 'package:http/http.dart' as http;
 class LocationService {
   bool _serviceEnabled;
   PermissionStatus _permissionGranted;
@@ -54,11 +57,22 @@ class LocationNotifier extends StateNotifier<LocationModel> {
   Future<LocationModel> getCurrentLocation() async {
     LocationService locationService = LocationService();
     final data = await locationService.getLocation();
+    final lat = data!.latitude;
+    final lng = data!.longitude;
+    await dotenv.load(fileName: ".env");
+    final apiKey = dotenv.env['GOOGLEMAPS_GEOLOCATION_API_KEY'];
+    String geoQuery =
+        'https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$lng&key=$apiKey';
+    final url = Uri.parse(geoQuery);
+    final response = await http.get(url);
+    final resData = json.decode(response.body);
+    final address = resData['results'][0]['formatted_address'];
+
     if (data != null) {
       state = LocationModel(
-        latitude: data.latitude!,
-        longitude: data.longitude!,
-        address: 'Unknown',
+        latitude: lat!,
+        longitude: lng!,
+        address: address,
       );
     }
     return state;

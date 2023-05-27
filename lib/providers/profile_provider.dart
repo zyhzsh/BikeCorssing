@@ -70,6 +70,7 @@ class UserProfileNotifier extends StateNotifier<UserProfileModel> {
   }
 
   void terminatedRentalContract() async {
+
     final upDatedCurrentContract = state.currentContract;
     if (upDatedCurrentContract != null) {
       //TODO API call to Terminated RentalContract;
@@ -118,6 +119,8 @@ class UserProfileNotifier extends StateNotifier<UserProfileModel> {
     );
     state = newState;
   }
+
+
 }
 
 final userProfileProvider =

@@ -12,9 +12,12 @@ class BikeHistoryList extends ConsumerWidget {
   const BikeHistoryList({
     super.key,
     required this.historyRecords,
+    this.withUserSection = true,
   });
 
   final List<HistoryRecordModel> historyRecords;
+  final bool withUserSection;
+
 
   Map<String, List<HistoryRecordModel>> getHistoryChunk() {
     Map<String, List<HistoryRecordModel>> historyChunk = {};
@@ -44,112 +47,205 @@ class BikeHistoryList extends ConsumerWidget {
     double currentWidth = MediaQuery.of(context).size.width;
     double currentHeight = MediaQuery.of(context).size.height;
 
-    return SingleChildScrollView(
-        child: Column(
-          children: [
-            ...getHistoryChunk().keys.map((userId) {
-              final getUser =
-              ref.read(userProfileProvider.notifier).getProfileById(userId);
-              return Column(children: [
-                Row(
-                  children: [
-                    FutureBuilder(
-                        future: getUser,
-                        builder: (ctx, snapshot) {
-                          if (snapshot.connectionState == ConnectionState.done) {
-                            UserProfileModel user =
-                            snapshot.data as UserProfileModel;
-                            return Row(
-                              children: [
-                                SizedBox(width: currentWidth * 0.02),
-                                CircleAvatar(
-                                  backgroundImage: NetworkImage(user.avatarUrl),
-                                ),
-                                SizedBox(width: currentWidth * 0.02),
-                                Text(user.userName,
-                                    style: TextStyle(
-                                        fontSize: 18, fontWeight: FontWeight.bold)),
-                              ],
-                            );
-                          }
-                          return Text('...');
-                        }),
-                  ],
-                ),
-                ...getHistoryChunk()[userId]!.map((hr) {
-                  return Card(
-                    elevation: 7,
-                    margin: EdgeInsets.symmetric(
-                        horizontal: currentWidth * 0.02,
-                        vertical: currentHeight * 0.01),
-                    clipBehavior: Clip.antiAlias,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ListTile(
-                          // trailing: Text(hr.location.address),
-                          title: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    Widget content = const Center(
+      child: Text('Loading...'),
+    );
+
+    if (withUserSection) {
+      content = Column(
+        children: [
+          ...getHistoryChunk().keys.map((userId) {
+            final getUser =
+            ref.read(userProfileProvider.notifier).getProfileById(userId);
+            return Column(children: [
+              Row(
+                children: [
+                  FutureBuilder(
+                      future: getUser,
+                      builder: (ctx, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          UserProfileModel user =
+                          snapshot.data as UserProfileModel;
+                          return Row(
                             children: [
-                              hr.recordType.getIcon(),
                               SizedBox(width: currentWidth * 0.02),
-                              Text(hr.createdAt.year.toString() +
-                                  '-' +
-                                  hr.createdAt.month.toString() +
-                                  '-' +
-                                  hr.createdAt.day.toString()),
+                              CircleAvatar(
+                                backgroundImage: NetworkImage(user.avatarUrl),
+                              ),
+                              SizedBox(width: currentWidth * 0.02),
+                              Text(user.userName,
+                                  style: TextStyle(
+                                      fontSize: 18, fontWeight: FontWeight.bold)),
                             ],
-                          ),
-                          subtitle: Text(hr.content,style: Theme.of(context).textTheme.bodyLarge,),
+                          );
+                        }
+                        return Text('...');
+                      }),
+                ],
+              ),
+              ...getHistoryChunk()[userId]!.map((hr) {
+                return Card(
+                  elevation: 7,
+                  margin: EdgeInsets.symmetric(
+                      horizontal: currentWidth * 0.02,
+                      vertical: currentHeight * 0.01),
+                  clipBehavior: Clip.antiAlias,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: currentHeight * 0.01),
+                      ListTile(
+                        // trailing: Text(hr.location.address),
+                        title: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            hr.recordType.getIcon(),
+                            SizedBox(width: currentWidth * 0.02),
+                            Text(hr.createdAt.year.toString() +
+                                '-' +
+                                hr.createdAt.month.toString() +
+                                '-' +
+                                hr.createdAt.day.toString()),
+                          ],
                         ),
-                        Padding(
-                          padding:
-                          EdgeInsets.symmetric(horizontal: currentWidth * 0.03),
-                          child: Row(
-                            children: [
-                              Icon(Icons.location_on_outlined),
-                              Text(hr.location.address,style: Theme.of(context).textTheme.labelSmall!.copyWith(),),
-                            ],
-                          ),
+                        subtitle: Text(hr.content,style: Theme.of(context).textTheme.bodyLarge,),
+                      ),
+                      Padding(
+                        padding:
+                        EdgeInsets.symmetric(horizontal: currentWidth * 0.03),
+                        child: Row(
+                          children: [
+                            Icon(Icons.location_on_outlined),
+                            Text(hr.location.address,style: Theme.of(context).textTheme.labelSmall!.copyWith(),),
+                          ],
                         ),
-                        hr.imgUrls.length > 0
-                            ? Container(
-                          height: currentHeight * 0.3,
-                          padding: EdgeInsets.symmetric(
-                              horizontal: currentWidth * 0.02,
-                              vertical: currentHeight * 0.01),
-                          child: ListView.separated(
-                            separatorBuilder: (ctx, index) =>
-                                SizedBox(width: currentWidth * 0.02),
-                            scrollDirection: Axis.horizontal,
-                            itemCount: hr.imgUrls.length,
-                            itemBuilder: (ctx, index) {
-                              double width = hr.imgUrls.length == 1
-                                  ? currentWidth
-                                  : hr.imgUrls.length == 2
-                                  ? currentWidth * 0.5
-                                  : currentWidth * 0.3;
-                              return Container(
-                                width: width,
-                                child: FadeInImage(
-                                  placeholder: MemoryImage(kTransparentImage),
-                                  image: NetworkImage(hr.imgUrls[index]),
-                                  fit: BoxFit.cover,
+                      ),
+                      hr.imgUrls.length > 0
+                          ? Container(
+                        height: currentHeight * 0.3,
+                        padding: EdgeInsets.symmetric(
+                            horizontal: currentWidth * 0.02,
+                            vertical: currentHeight * 0.01),
+                        child: ListView.separated(
+                          separatorBuilder: (ctx, index) =>
+                              SizedBox(width: currentWidth * 0.02),
+                          scrollDirection: Axis.horizontal,
+                          itemCount: hr.imgUrls.length,
+                          itemBuilder: (ctx, index) {
+                            double width = hr.imgUrls.length == 1
+                                ? currentWidth
+                                : hr.imgUrls.length == 2
+                                ? currentWidth * 0.5
+                                : currentWidth * 0.3;
+                            return SizedBox(
+                              width: width,
+                              child: FadeInImage(
+                                placeholder: MemoryImage(kTransparentImage),
+                                image: NetworkImage(hr.imgUrls[index],
+                                    scale: 0.5
                                 ),
-                              );
-                            },
+                                fit: BoxFit.cover,
+                              ),
+                            );
+                          },
+                        ),
+                      )
+                          : SizedBox(height: currentHeight * 0.01),
+                    ],
+                  ),
+                );
+              }).toList(),
+            ]);
+          }),
+        ],
+      );
+    }else{
+      content=Column(children: [
+        ...historyRecords.map((hr) {
+          return Card(
+            elevation: 7,
+            margin: EdgeInsets.symmetric(
+                horizontal: currentWidth * 0.02,
+                vertical: currentHeight * 0.01),
+            clipBehavior: Clip.antiAlias,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: currentHeight * 0.01),
+                ListTile(
+                  // trailing: Text(hr.location.address),
+                  title: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      hr.recordType.getIcon(),
+                      SizedBox(width: currentWidth * 0.02),
+                      Text(hr.createdAt.year.toString() +
+                          '-' +
+                          hr.createdAt.month.toString() +
+                          '-' +
+                          hr.createdAt.day.toString()),
+                    ],
+                  ),
+                  subtitle: Text(hr.content,style: Theme.of(context).textTheme.bodyLarge,),
+                ),
+                Padding(
+                  padding:
+                  EdgeInsets.symmetric(horizontal: currentWidth * 0.03),
+                  child: Row(
+                    children: [
+                      Icon(Icons.location_on_outlined),
+                      Text(hr.location.address,style: Theme.of(context).textTheme.labelSmall!.copyWith(),),
+                    ],
+                  ),
+                ),
+                hr.imgUrls.length > 0
+                    ? Container(
+                  height: currentHeight * 0.3,
+                  padding: EdgeInsets.symmetric(
+                      horizontal: currentWidth * 0.02,
+                      vertical: currentHeight * 0.01),
+                  child: ListView.separated(
+                    separatorBuilder: (ctx, index) =>
+                        SizedBox(width: currentWidth * 0.02),
+                    scrollDirection: Axis.horizontal,
+                    itemCount: hr.imgUrls.length,
+                    itemBuilder: (ctx, index) {
+                      double width = hr.imgUrls.length == 1
+                          ? currentWidth
+                          : hr.imgUrls.length == 2
+                          ? currentWidth * 0.5
+                          : currentWidth * 0.3;
+                      return SizedBox(
+                        width: width,
+                        child: FadeInImage(
+                          placeholder: MemoryImage(kTransparentImage),
+                          image: NetworkImage(hr.imgUrls[index],
+                              scale: 0.5
                           ),
-                        )
-                            : SizedBox(height: currentHeight * 0.01),
-                      ],
-                    ),
-                  );
-                }).toList(),
-              ]);
-            }),
-            SizedBox(height: currentHeight * 0.1),
-          ],
-        ));
+                          fit: BoxFit.cover,
+                        ),
+                      );
+                    },
+                  ),
+                )
+                    : SizedBox(height: currentHeight * 0.01),
+              ],
+            ),
+          );
+        }).toList(),]);
+    }
+
+
+
+    if (historyRecords.isEmpty) {
+      return const Center(
+        child: Text('No history yet'),
+      );
+    }
+
+
+    return SingleChildScrollView(
+        child: content,);
   }
 }
 

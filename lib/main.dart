@@ -11,8 +11,9 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 final theme = ThemeData(
   useMaterial3: true,
   colorScheme: ColorScheme.fromSeed(
-//    brightness: Brightness.dark,
-    seedColor: const Color.fromARGB(255, 50, 201, 169),
+//  brightness: Brightness.dark,
+     seedColor: const Color.fromARGB(255, 50, 201, 169),
+    //seedColor: const Color.fromARGB(255, 44, 10, 169),
   ),
   textTheme: GoogleFonts.latoTextTheme(),
 );

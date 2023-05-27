@@ -1,11 +1,11 @@
 import 'package:BikeCrossing/models/bike_model.dart';
-import 'package:BikeCrossing/models/rental_contract_model.dart';
+
 import 'package:BikeCrossing/providers/profile_provider.dart';
 import 'package:BikeCrossing/screens/home_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:supabase_auth_ui/supabase_auth_ui.dart';
+
 
 import '../models/history_record_model.dart';
 import '../models/location_model.dart';
@@ -76,7 +76,6 @@ class ContractApprovedScreen extends ConsumerWidget {
                   createdAt: DateTime.now());
               ref.read(bikesProvider.notifier).addBikeHistoryRecord(record);
               ///
-              Navigator.pop(context);
               Navigator.pop(context);
               Navigator.pop(context);
               Navigator.pop(context);

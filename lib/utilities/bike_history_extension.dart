@@ -13,6 +13,9 @@ extension BikeTypeExtension on BikeModel {
         times++;
       }
     }
+    if (type == TypeOfRecord.rent) {
+      times++;
+    }
     return times;
   }
 }

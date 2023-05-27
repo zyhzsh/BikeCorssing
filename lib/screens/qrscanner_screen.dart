@@ -2,11 +2,9 @@ import 'package:BikeCrossing/models/bike_model.dart';
 import 'package:BikeCrossing/providers/bikes_provider.dart';
 import 'package:BikeCrossing/screens/rent_contract_screen.dart';
 import 'package:flutter/cupertino.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-
 
 class QrScannerScreen extends ConsumerStatefulWidget {
   const QrScannerScreen({super.key, required this.bike});
@@ -59,7 +57,12 @@ class _QrScannerScreenState extends ConsumerState<QrScannerScreen> {
                 ),
               ),
             ),
-            ElevatedButton(onPressed: _creatingRentalContract, child: Text('test')),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  _creatingRentalContract();
+                },
+                child: Text('test')),
             Container(
               width: 500,
               height: 500,

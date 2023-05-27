@@ -36,3 +36,4 @@ enum ContractStatus {
   terminated,
   expired,
 }
+

@@ -180,6 +180,7 @@ class BikeModel {
   }
 
 
+
   String get formattedDate {
     return formatter.format(createdAt!);
   }
